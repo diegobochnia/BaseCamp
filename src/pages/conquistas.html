@@ -68,12 +68,6 @@
             </h2>
 
             <div class="space-y-4">
-                <input
-                    type="text"
-                    id="conquistas_id"
-                    class="w-full rounded-md border border-gray-300 px-4 py-2 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
-                    placeholder="ID da conquista"
-                />
 
                 <input
                     type="text"
@@ -96,9 +90,21 @@
                     Enviar
                 </button>
             </div>
-
-            <p id="p_des" class="mt-4 text-sm text-gray-700"></p>
         </section>
+
+        <div class="mt-6 overflow-x-auto">
+            <table class="w-full rounded-lg border border-gray-300 bg-white shadow-sm">
+                <thead class="bg-green-900 text-white">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-3 text-left">ID</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Nome</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Descrição</th>
+                        <th class="border border-gray-300 px-4 py-3 text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela" class="text-sm text-gray-700"></tbody>
+            </table>
+        </div>
 
         <div id="alterar" class="mt-6 space-y-3"></div>
     </main>
