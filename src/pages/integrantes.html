@@ -9,9 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body>
+<body class="w-screen">
     <header class="bg-green-900 text-white shadow-md">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
+        <div class="mx-auto flex items-center justify-between px-8 py-5">
 
             <a href="../index.html" class="text-2xl font-bold tracking-wide">
                 BaseCamp
@@ -20,43 +20,37 @@
             <nav aria-label="Navegação principal">
                 <ul class="flex items-center gap-2 text-sm font-medium">
                     <li>
-                        <a href="../index.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                        <a href="../index.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Início
                         </a>
                     </li>
 
                     <li>
-                        <a href="integrantes.html" aria-current="page"
-                            class="block rounded-md bg-green-800 px-4 py-2">
+                        <a href="integrantes.html" aria-current="page" class="block rounded-md bg-green-800 px-4 py-2">
                             Integrantes
                         </a>
                     </li>
 
                     <li>
-                        <a href="secoes.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                        <a href="secoes.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Seções
                         </a>
                     </li>
 
                     <li>
-                        <a href="atividades.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                        <a href="atividades.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Atividades
                         </a>
                     </li>
 
                     <li>
-                        <a href="conquistas.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                        <a href="conquistas.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Conquistas
                         </a>
                     </li>
 
                     <li>
-                        <a href="avisos.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                        <a href="avisos.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Avisos
                         </a>
                     </li>
@@ -68,6 +62,68 @@
 
     <main class="mx-auto max-w-6xl px-8 py-8">
         <h1 class="text-2xl font-bold text-green-900">Integrantes</h1>
+
+        <div class="mt-6 flex flex-col lg:flex-row gap-6 items-start">
+            <div class="w-full lg:w-80 shrink-0 bg-white rounded-lg shadow-sm border border-zinc-200 p-5">
+                <h2 class="text-sm font-semibold text-green-900 uppercase tracking-wide mb-4">Novo integrante</h2>
+
+                <form class="flex flex-col gap-3">
+                    <label class="flex flex-col gap-1 text-sm text-zinc-600">
+                        Nome
+                        <input type="text" placeholder="Nome completo" id="nome"
+                            class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
+                    </label>
+
+                    <label class="flex flex-col gap-1 text-sm text-zinc-600">
+                        Data de nascimento
+                        <input type="date" id="nascimento"
+                            class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
+                    </label>
+
+                    <label class="flex flex-col gap-1 text-sm text-zinc-600">
+                        Telefone
+                        <input type="text" placeholder="(00) 00000-0000" id="telefone"
+                            class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
+                    </label>
+
+                    <label class="flex flex-col gap-1 text-sm text-zinc-600">
+                        Seção
+                        <select name="secoes" id="secoes"
+                            class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition">
+                            <option value="">Selecione uma seção</option>
+                            <option value="lobinho">Lobinho</option>
+                            <option value="escoteiro">Escoteiro</option>
+                            <option value="senior">Sênior</option>
+                            <option value="pioneiro">Pioneiro</option>
+                            <option value="chefe">Chefe</option>
+                            <option value="administrativo">Administrativo</option>
+                        </select>
+                    </label>
+
+                    <input type="button" value="Adicionar"
+                        class="mt-2 bg-green-900 text-white py-2 px-4 rounded-md hover:bg-green-800 transition cursor-pointer font-medium"
+                        id="add-integrante" />
+                </form>
+            </div>
+
+            <div class="flex-1 w-full bg-white rounded-lg shadow-sm border border-zinc-200 p-5 overflow-x-auto">
+                <h2 class="text-sm font-semibold text-green-900 uppercase tracking-wide mb-4">Lista de integrantes</h2>
+
+                <table class="w-full text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-green-900 text-white">
+                            <th class="px-4 py-2 text-left rounded-l-md">Nome</th>
+                            <th class="px-4 py-2 text-left">Data de Nascimento</th>
+                            <th class="px-4 py-2 text-left">Telefone</th>
+                            <th class="px-4 py-2 text-left">Seção</th>
+                            <th class="px-4 py-2 text-left rounded-r-md">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="integrantes-table-body" class="divide-y divide-zinc-100">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
 
     <script src="../assests/js/integrantes.js"></script>
