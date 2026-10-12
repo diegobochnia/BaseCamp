@@ -12,9 +12,9 @@
 <body>
     <header class="bg-green-900 text-white shadow-md">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
-
+            <img src="images/logo-basecamp.png" alt="Logo do BaseCamp" class="h-20 w-20 rounded-full" />
             <a href="index.html" class="text-2xl font-bold tracking-wide">
-                BaseCamp
+                <span class="text-yellow-400">Base</span><span class="text-green-300">Camp</span>
             </a>
 
             <nav aria-label="Navegação principal">
@@ -60,6 +60,13 @@
                             Avisos
                         </a>
                     </li>
+                    <!-- painel de login com o icone icon-user -->
+                    <li>
+                        <a href="pages/login.html" class="block rounded-md px-4 py-2 transition hover:bg-green-800">
+                            <svg width="1.25em" height="1.25em" aria-hidden="true"><use href="#icon-user"/></svg>
+                            Entrar
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
@@ -71,5 +78,10 @@
         <p class="mt-2">Selecione uma opção no menu para acessar os cadastros.</p>
     </main>
 </body>
-
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-user" viewBox="0 0 19 20">
+            <path fill="currentColor" fill-rule="evenodd"
+            d="M16.414 15.411a11.303 11.303 0 01-7.207 2.59c-2.64 0-5.182-.917-7.207-2.59v-.407c0-1.229.983-2.268 2.336-2.472l4.87-1.24 4.774 1.22.098.02c1.354.204 2.336 1.243 2.336 2.472v.407zM6.896 6.948c0-.276-.063-.708-.175-1.446-.082-.536-.194-1.27-.194-1.528C6.527 2.904 7.754 2 9.206 2c1.454 0 2.68.904 2.68 1.974 0 .256-.111.991-.192 1.527-.113.74-.176 1.17-.176 1.447a2.31 2.31 0 01-2.221 2.303l-.09-.024-.09.024a2.31 2.31 0 01-2.221-2.303zm7.533 3.614l-2.186-.558a4.298 4.298 0 001.275-3.055c0-.15.089-.726.153-1.146.13-.859.216-1.45.216-1.829 0-2.19-2.1-3.974-4.681-3.974-2.58 0-4.68 1.783-4.68 3.974 0 .38.087.97.217 1.83.064.42.152.995.153 1.144 0 1.193.489 2.275 1.274 3.056l-2.185.558C1.673 10.935 0 12.795 0 15.004v1.313l.334.3A13.3 13.3 0 009.207 20c3.278 0 6.43-1.202 8.873-3.384l.334-.299v-1.313c0-2.209-1.673-4.069-3.985-4.442z"/>
+        </symbol>
+    </svg>
 </html>
