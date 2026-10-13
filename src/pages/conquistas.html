@@ -9,13 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-50">
     <header class="bg-green-900 text-white shadow-md">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
 
             <img src="images/logo-basecamp.png" alt="Logo do BaseCamp" class="h-20 w-20 rounded-full" />
             <a href="index.html" class="text-2xl font-bold tracking-wide">
                 <span class="text-yellow-400">Base</span><span class="text-green-300">Camp</span>
+            <a href="../index.html" class="text-2xl font-bold tracking-wide">
+                BaseCamp
             </a>
 
             <nav aria-label="Navegação principal">
@@ -26,35 +28,30 @@
                             Início
                         </a>
                     </li>
-
                     <li>
                         <a href="integrantes.html"
                             class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Integrantes
                         </a>
                     </li>
-
                     <li>
                         <a href="secoes.html"
                             class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Seções
                         </a>
                     </li>
-
                     <li>
                         <a href="atividades.html"
                             class="block rounded-md px-4 py-2 transition hover:bg-green-800">
                             Atividades
                         </a>
                     </li>
-
                     <li>
                         <a href="conquistas.html" aria-current="page"
                             class="block rounded-md bg-green-800 px-4 py-2">
                             Conquistas
                         </a>
                     </li>
-
                     <li>
                         <a href="avisos.html"
                             class="block rounded-md px-4 py-2 transition hover:bg-green-800">
@@ -70,12 +67,57 @@
                     </li>
                 </ul>
             </nav>
-
         </div>
     </header>
 
     <main class="mx-auto max-w-6xl px-8 py-8">
-        <h1 class="text-2xl font-bold text-green-900">Conquistas</h1>
+        <h1 class="mb-6 text-2xl font-bold text-green-900">Conquistas</h1>
+
+        <section class="max-w-xl rounded-lg bg-white p-6 shadow-sm">
+            <h2 class="mb-5 text-xl font-semibold text-gray-800">
+                Cadastro de Conquistas
+            </h2>
+
+            <div class="space-y-4">
+
+                <input
+                    type="text"
+                    id="conquistas_name"
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
+                    placeholder="Nome da conquista"
+                />
+
+                <input
+                    type="text"
+                    id="conquistas_desc"
+                    class="w-full rounded-md border border-gray-300 px-4 py-2 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-100"
+                    placeholder="Descrição da conquista"
+                />
+
+                <button
+                    id="btn"
+                    type="button"
+                    class="rounded-md bg-green-800 px-5 py-2 font-medium text-white transition hover:bg-green-900">
+                    Enviar
+                </button>
+            </div>
+        </section>
+
+        <div class="mt-6 overflow-x-auto">
+            <table class="w-full rounded-lg border border-gray-300 bg-white shadow-sm">
+                <thead class="bg-green-900 text-white">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-3 text-left">ID</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Nome</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Descrição</th>
+                        <th class="border border-gray-300 px-4 py-3 text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela" class="text-sm text-gray-700"></tbody>
+            </table>
+        </div>
+
+        <div id="alterar" class="mt-6 space-y-3"></div>
     </main>
 
     <script src="../assests/js/conquistas.js"></script>
