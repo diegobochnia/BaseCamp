@@ -44,11 +44,31 @@ A primeira entrega de Desenvolvimento Web contempla cinco CRUDs independentes co
 | [Regras de negócio](regras-de-negocio.md) | Restrições e condições que orientam o funcionamento do sistema. |
 | [Elicitação](elicitacao.md) | Fontes de informação, técnicas utilizadas no cenário acadêmico simulado e justificativas. |
 
-## Documento da Sprint 1
+## Entregas por sprint
 
-A versão revisada da documentação da Sprint 1 está disponível em [Sprint 1 — PDF](entregas/sprint-01/sprint-1.pdf).
+| Sprint | Conteúdo | Arquivos |
+| --- | --- | --- |
+| Sprint 1 | Identificação da equipe, objetivo, 23 requisitos funcionais, 5 requisitos não funcionais, fontes de informação e técnicas de elicitação. | [Documento em PDF](entregas/sprint-01/BaseCamp_Sprint_1.pdf) |
+| Sprint 2 | Documentação revisada e diagrama de casos de uso. | [Documento em PDF](entregas/sprint-02/BaseCamp_Sprint_2.pdf) · [Diagrama em PDF](entregas/sprint-02/UCdiagrama-BaseCamp.pdf) · [Arquivo editável do Astah](entregas/sprint-02/BaseCamp.asta) |
+| Sprint 3 | Em revisão pela equipe. Documento consolidado das três sprints, incluindo o diagrama e cinco especificações de casos de uso: três funcionais e duas relacionadas a requisitos não funcionais. | [Documento consolidado em Word](entregas/sprint-03/BaseCamp_Sprint_3.docx) |
 
-Os arquivos Markdown desta pasta constituem a documentação de trabalho e devem ser atualizados conforme as definições do projeto. O PDF reúne o conteúdo consolidado da revisão correspondente.
+O documento da Sprint 3 reúne os materiais das três sprints. Os arquivos anteriores preservam as versões correspondentes às entregas de cada etapa. Os documentos Markdown desta pasta complementam a documentação e devem acompanhar as definições do projeto.
+
+### Especificações da Sprint 3
+
+| Identificador | Caso de uso | Requisitos relacionados |
+| --- | --- | --- |
+| UC01 | Gerenciar inscrições | RF04 |
+| UC02 | Registrar presença | RF05 |
+| UC03 | Conceder conquistas | RF06 e RF07 |
+| UC04 | Acessar funções protegidas | RNF04 — Segurança; RF19 e RF20 |
+| UC05 | Consultar atividades em diferentes telas | RNF01 — Responsividade; RF03 |
+
+As especificações apresentam descrição, atores, pré-condições, fluxo principal, fluxos alternativos, fluxos de exceção e pós-condições. Os cenários de segurança e responsividade também definem critérios de verificação; sua documentação não comprova testes executados.
+
+### PDF consolidado
+
+O documento consolidado da Sprint 3 está em revisão pela equipe. O DOCX permanece disponível nesta etapa; o PDF final será incluído em outro commit, após a revisão, com o respectivo link nesta seção.
 
 ## Elicitação de requisitos
 
@@ -65,6 +85,12 @@ engenharia-de-requisitos/
 ├── regras-de-negocio.md
 ├── elicitacao.md
 └── entregas/
-    └──sprint-01/
-        └── sprint-1.pdf
+    ├── sprint-01/
+    │   └── BaseCamp_Sprint_1.pdf
+    ├── sprint-02/
+    │   ├── BaseCamp_Sprint_2.pdf
+    │   ├── UCdiagrama-BaseCamp.pdf
+    │   └── BaseCamp.asta
+    └── sprint-03/
+        └── BaseCamp_Sprint_3.docx
 ```

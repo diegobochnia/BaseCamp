@@ -1,0 +1,30 @@
+Motor: MariaDB 10.11.14 (modo bootstrap, sem servidor de rede).
+DDL e carga executados no motor MariaDB. A rota bootstrap nao fornece uma sessao normal para todas as consultas de information_schema. A confirmacao posterior no XAMPP esta registrada ao final.
+Relatorio 1: 11 linhas, esperado 11.
+Relatorio 2: 8 linhas, esperado 8.
+Relatorio 3: 6 linhas, esperado 6.
+email repetido: bloqueado.
+perfil duplicado: bloqueado.
+inscricao duplicada: bloqueado.
+conquista duplicada: bloqueado.
+FK inexistente: bloqueado.
+exclusao com historico: bloqueado.
+valor financeiro negativo: bloqueado.
+periodo de atividade invalido: bloqueado.
+aviso de secao sem destino: bloqueado.
+aviso publico com destino: bloqueado.
+cancelamento sem data: bloqueado.
+tipo financeiro invalido: bloqueado.
+Financeiro: entradas 950.00; saidas 250.00; saldo 700.00.
+16 tabelas; 95 registros; contagens conferidas apos os testes.
+
+Conferencia local da equipe em 20/10/2026 - phpMyAdmin / XAMPP
+Importacao confirmada.
+16 tabelas e 95 registros.
+16 PRIMARY KEY; 24 FOREIGN KEY; 8 UNIQUE; 20 CHECK cadastradas.
+Relatorios: 11, 8 e 6 linhas.
+Financeiro: entradas 950.00; saidas 250.00; saldo 700.00.
+Sete verificacoes de inconsistencias: todas com zero problemas.
+Evidencias: pasta ../evidências/, conforme README da disciplina.
+Consultas conferidas por etapas com referencias explicitas a basecamp_v2 apos erro de contexto em information_schema na execucao em lote.
+Os 12 testes de rejeicao acima nao foram repetidos no XAMPP nesta conferencia.

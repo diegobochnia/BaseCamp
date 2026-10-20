@@ -2,141 +2,111 @@
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
-Aplicação web desenvolvida para auxiliar na organização e no gerenciamento das informações de um grupo escoteiro.
-
-O projeto foi criado pela equipe **Escoteiros do BOB** como parte de uma atividade acadêmica integrada.
-
-## Integrantes
-
-- Diego Rhian Bochnia
-- Guilherme Moczedlo Kadubitzki
-- Luigi Ulbrich Pietrobon
-- Pedro Chaves Steck
-- Vinicius Dias Marcondes da Cruz
+Aplicação web para apoiar a organização de um grupo escoteiro, desenvolvida pela equipe **Escoteiros do BOB**, no curso de Engenharia de Software da **PUCPR**.
 
 ## Objetivo
 
-O BaseCamp tem como objetivo centralizar informações importantes de um grupo escoteiro, facilitando o gerenciamento de integrantes, seções, atividades, conquistas e avisos.
+Centralizar atividades, participação dos integrantes, conquistas, avisos e movimentações financeiras de um grupo escoteiro. Disponibilizar informações institucionais ao público e funcionalidades internas conforme o perfil do usuário.
 
-Nesta etapa do projeto, foram desenvolvidos cinco CRUDs utilizando JavaScript e LocalStorage.
+## Estado atual
 
-## CRUDs desenvolvidos
+| Área | Situação |
+| --- | --- |
+| Desenvolvimento Web | Primeira entrega com cinco CRUDs independentes em JavaScript e LocalStorage, registrada por commit. O código atual inclui melhorias no cabeçalho e na navegação. |
+| Arquitetura de Banco de Dados | Modelos conceitual e lógico revisados; SQL com 16 tabelas e 95 registros fictícios, três relatórios com INNER JOIN e evidências de conferência no XAMPP. |
+| Engenharia de Requisitos | 23 requisitos funcionais e 5 não funcionais, documentação das Sprints 1 e 2 e diagrama de casos de uso. O documento consolidado da Sprint 3 está em revisão pela equipe. |
+| Integração | Integração da aplicação com o banco, autenticação efetiva e controle de permissões previstos para a evolução do projeto. |
 
-| CRUD | Funcionalidades |
-|---|---|
-| Integrantes | Cadastrar, listar, editar e excluir integrantes |
-| Seções | Cadastrar, listar, editar e excluir seções |
-| Atividades | Cadastrar, listar, editar e excluir atividades |
-| Conquistas | Cadastrar, listar, editar e excluir conquistas |
-| Avisos | Cadastrar, listar, editar e excluir avisos |
+A documentação descreve o produto final previsto. Sua existência não significa que todas as funcionalidades estejam implementadas na aplicação atual.
 
-## O que é um CRUD?
+## Documentação por disciplina
 
-CRUD representa as quatro operações básicas utilizadas para gerenciar dados:
+- [Engenharia de Requisitos](docs/engenharia-de-requisitos/README.md): requisitos, usuários, permissões, elicitação, regras de negócio e entregas por sprint.
+- [Arquitetura de Banco de Dados](docs/arquitetura-de-banco-de-dados/README.md): modelos, scripts SQL, relatórios e evidências.
+- [Desenvolvimento Web](docs/desenvolvimento-web/README.md): primeira entrega, responsabilidades, execução e roteiro de verificação dos CRUDs.
 
-- **Create:** cadastrar um novo registro;
-- **Read:** listar e consultar os registros;
-- **Update:** alterar um registro existente;
-- **Delete:** excluir um registro.
+O [DOCX consolidado da Sprint 3](docs/engenharia-de-requisitos/entregas/sprint-03/BaseCamp_Sprint_3.docx) permanece em revisão. Sua versão final em PDF será incluída em outro commit, após a revisão da equipe. A apresentação de Banco de Dados foi entregue no AVA e não integra este repositório.
 
-Cada integrante da equipe ficou responsável pelo desenvolvimento e pela explicação de um dos CRUDs da aplicação.
+## Equipe e responsabilidades nos CRUDs
 
-## Armazenamento dos dados
+| Integrante | CRUD da primeira entrega |
+| --- | --- |
+| Diego Rhian Bochnia | Avisos |
+| Guilherme Moczedlo Kadubitzki | Integrantes |
+| Luigi Ulbrich Pietrobon | Seções |
+| Pedro Chaves Steck | Atividades |
+| Vinicius Dias Marcondes da Cruz | Conquistas |
 
-Nesta etapa, os dados são armazenados no **LocalStorage** do navegador.
+Cada CRUD permite cadastrar, listar, editar e excluir registros. A versão da primeira entrega está registrada no commit [0c63d97](https://github.com/diegobochnia/BaseCamp/tree/0c63d978128d7e1c3f8e37a46319e0b08475bd09).
 
-Os registros são organizados em listas de objetos JavaScript e armazenados utilizando:
+## Tecnologias
 
-- `localStorage.getItem()`;
-- `localStorage.setItem()`;
-- `JSON.parse()`;
-- `JSON.stringify()`.
+- HTML e JavaScript.
+- Tailwind CSS carregado por CDN.
+- LocalStorage e JSON na aplicação atual.
+- SQL, com tabelas InnoDB e codificação utf8mb4, no banco revisado.
+- XAMPP, Apache e phpMyAdmin para execução e conferência local.
+- Git e GitHub para versionamento.
+- draw.io e Astah para os modelos e diagramas.
 
-O `JSON.stringify()` transforma as listas em texto para que possam ser armazenadas. O `JSON.parse()` transforma os dados armazenados novamente em listas de objetos JavaScript.
+## Executar a aplicação atual
 
-Os dados permanecem salvos mesmo após a página ser atualizada ou fechada. Porém, cada navegador possui seu próprio LocalStorage.
+1. Copie a pasta do projeto para `C:\xampp\htdocs\base-camp`.
+2. Abra o XAMPP Control Panel e inicie o **Apache**.
+3. Acesse [http://localhost/base-camp/src/](http://localhost/base-camp/src/).
+4. Utilize o menu para acessar Integrantes, Seções, Atividades, Conquistas e Avisos.
 
-## Tecnologias utilizadas
+Para executar os cinco CRUDs, não é necessário iniciar o MySQL nem importar os scripts SQL. A estilização por CDN requer acesso à internet.
 
-- HTML5;
-- JavaScript;
-- Tailwind CSS;
-- LocalStorage;
-- XAMPP e servidor Apache;
-- Git e GitHub.
+Os dados são salvos no LocalStorage da origem da aplicação e do perfil do navegador, por meio de `localStorage.getItem()`, `localStorage.setItem()`, `JSON.parse()` e `JSON.stringify()`. Permanecem após recarregar a página, desde que o armazenamento não seja apagado. Outro navegador ou perfil tem seus próprios registros; em navegação anônima, o armazenamento é temporário.
 
-O Tailwind CSS é carregado por CDN. Por isso, é necessário estar conectado à internet para que toda a estilização seja apresentada corretamente.
+### Tela de login
 
-## Estrutura do projeto
+A página de login está presente como parte da evolução da interface. O script solicita `/api/login`, mas este repositório ainda não contém a API correspondente. O link de criação de conta aponta para `cadastro.html`, página ainda não incluída. A tela não deve ser usada como evidência de autenticação ou de controle de acesso implementados.
+
+## Executar o banco separadamente
+
+1. Inicie **Apache** e **MySQL** no XAMPP e abra [phpMyAdmin](http://localhost/phpmyadmin).
+2. Em uma instalação nova, importe [basecamp_v2_completo.sql](docs/arquitetura-de-banco-de-dados/sql/basecamp_v2_completo.sql), em formato SQL e UTF-8.
+3. Confira o banco `basecamp_v2`. Se ele já estiver preenchido, execute somente as consultas de relatórios e validação, sem repetir a criação ou a carga.
+4. Consulte as [instruções detalhadas do SQL](docs/arquitetura-de-banco-de-dados/sql/README.md).
+
+O banco revisado é instalado separadamente da versão anterior. Importar o SQL não conecta automaticamente os CRUDs ao banco.
+
+Na conferência local, foram confirmados 16 tabelas, 95 registros, 16 chaves primárias, 24 chaves estrangeiras e 8 restrições UNIQUE. Os relatórios retornaram 11, 8 e 6 linhas; o saldo financeiro foi de 700,00 e as sete verificações de inconsistências retornaram zero problemas. As [evidências estão disponíveis na documentação da disciplina](docs/arquitetura-de-banco-de-dados/README.md#evidências).
+
+## Estrutura principal
 
 ```text
 base-camp/
 ├── README.md
-├── .gitignore
+├── docs/
+│   ├── engenharia-de-requisitos/
+│   ├── arquitetura-de-banco-de-dados/
+│   │   ├── modelos/
+│   │   ├── sql/
+│   │   └── evidências/
+│   └── desenvolvimento-web/
 └── src/
     ├── index.html
-    ├── pages/
-    │   ├── integrantes.html
-    │   ├── secoes.html
-    │   ├── atividades.html
-    │   ├── conquistas.html
-    │   └── avisos.html
-    └── assests/
-        └── js/
-            ├── integrantes.js
-            ├── secoes.js
-            ├── atividades.js
-            ├── conquistas.js
-            └── avisos.js
-
-
-```
-## Como executar
-
-Para executar a aplicação, utilize o XAMPP seguindo as etapas abaixo:
-
-### 1. Copiar o projeto
-
-Localize a pasta `htdocs` do XAMPP. Normalmente, ela está disponível no seguinte caminho:
-
-```text
-C:\xampp\htdocs
+    ├── assests/
+    │   ├── login.js
+    │   └── js/
+    │       ├── cabecalho.js
+    │       ├── integrantes.js
+    │       ├── secoes.js
+    │       ├── atividades.js
+    │       ├── conquistas.js
+    │       └── avisos.js
+    └── pages/
+        ├── images/
+        │   └── logo-basecamp.png
+        ├── login.html
+        ├── integrantes.html
+        ├── secoes.html
+        ├── atividades.html
+        ├── conquistas.html
+        └── avisos.html
 ```
 
-Copie a pasta completa `base-camp` para dentro da pasta `htdocs`.
-
-A estrutura deverá ficar semelhante a:
-
-```text
-C:\xampp\htdocs\base-camp
-```
-
-### 2. Iniciar o servidor
-
-Abra o painel de controle do XAMPP e clique em **Start** ao lado do serviço **Apache**.
-
-### 3. Abrir a aplicação
-
-Com o Apache em execução, abra o navegador e acesse:
-
-```text
-http://localhost/base-camp/src/
-```
-
-Também é possível acessar diretamente o arquivo inicial:
-
-```text
-http://localhost/base-camp/src/index.html
-```
-
-### 4. Navegar pelo sistema
-
-Utilize o menu de navegação da aplicação para acessar os cinco CRUDs:
-
-- Integrantes;
-- Seções;
-- Atividades;
-- Conquistas;
-- Avisos.
-
-> **Observação:** os dados são armazenados no LocalStorage do navegador. Ao abrir a aplicação em outro navegador ou em uma janela anônima, os registros anteriores não estarão disponíveis e será necessário cadastrar novos dados.
+A grafia `assests` corresponde à pasta existente e aos caminhos utilizados no código. Os modelos e scripts do banco estão centralizados na documentação de Arquitetura de Banco de Dados.
