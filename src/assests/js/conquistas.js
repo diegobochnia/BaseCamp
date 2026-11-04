@@ -1,99 +1,194 @@
-document.getElementById('btn').addEventListener('click', () => {
-  const conquistas_name = document.getElementById('conquistas_name').value.trim(); //pega o nome digitado no formulário
-  const conquistas_desc = document.getElementById('conquistas_desc').value.trim(); //pega a descrição digitada no formulário
+// URL base da pasta onde estão os endpoints PHP das conquistas
+const URL_BASE = '../php/conquistas/';
 
-  if (!conquistas_name || !conquistas_desc) { //verifica se os campos estão vazios
-    return;
+// Executa ao carregar o DOM da página
+document.addEventListener('DOMContentLoaded', () => {
+  listarConquistas();
+
+  const formConquista = document.getElementById('form-conquista') || document.querySelector('form');
+  if (formConquista) {
+    formConquista.addEventListener('submit', salvarConquista);
   }
-
-  let lista = JSON.parse(localStorage.getItem('conquistas')) || []; //pega a lista salva ou cria um array vazio
-  lista.push({ nome: conquistas_name, descricao: conquistas_desc }); //adiciona um objeto com os dados à lista
-  localStorage.setItem('conquistas', JSON.stringify(lista)); //converte a lista para string e salva no localStorage
-
-  document.getElementById('conquistas_name').value = ''; //limpa os campos depois do cadastro
-  document.getElementById('conquistas_desc').value = '';
-  document.getElementById('alterar').innerHTML = '';
-
-  listar(); //atualiza a tabela
 });
 
-function listar() { //mostra todas as conquistas salvas no localStorage
-  const lista = JSON.parse(localStorage.getItem('conquistas')) || []; //recupera a lista ou cria um array vazio
-  const corpoTabela = document.getElementById('corpoTabela'); //pega a área que recebe as conquistas
+/**
+ * READ: Busca as conquistas no banco de dados e monta a tabela/lista
+ */
+async function listarConquistas() {
+  try {
+    const resposta = await fetch(`${URL_BASE}conquista_get.php`);
 
-  corpoTabela.innerHTML = ''; //limpa a tabela para não duplicar os dados
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
 
-  if (lista.length === 0) { //verifica se a lista está vazia
-    corpoTabela.innerHTML = `
-      <tr>
-        <td colspan="4" class="px-4 py-6 text-center text-gray-500">
-          Nenhuma conquista cadastrada.
-        </td>
-      </tr>`;
+    const conquistas = await resposta.json();
+    const tabela =
+      document.getElementById('tabela-conquistas') || document.getElementById('lista-conquistas');
+
+    if (!tabela) return;
+
+    tabela.innerHTML = '';
+
+    if (conquistas.length === 0) {
+      tabela.innerHTML =
+        '<tr><td colspan="4" class="text-center py-4 text-gray-500">Nenhuma conquista cadastrada.</td></tr>';
+      return;
+    }
+
+    conquistas.forEach(conquista => {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b hover:bg-gray-50';
+
+      tr.innerHTML = `
+                <td class="py-2 px-4">${conquista.id_conquista}</td>
+                <td class="py-2 px-4 font-medium">${conquista.nome}</td>
+                <td class="py-2 px-4">${conquista.criterios}</td>
+                <td class="py-2 px-4 flex gap-2">
+                    <button onclick="carregarParaEditar('${conquista.id_conquista}', '${conquista.nome.replace(/'/g, "\\'")}', '${conquista.criterios.replace(/'/g, "\\'")}')"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
+                        Editar
+                    </button>
+                    <button onclick="excluirConquista(${conquista.id_conquista})"
+                            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                        Excluir
+                    </button>
+                </td>
+            `;
+
+      tabela.appendChild(tr);
+    });
+  } catch (erro) {
+    console.error('Erro ao listar conquistas:', erro);
+    alert('Não foi possível carregar as conquistas.');
+  }
+}
+
+/**
+ * CREATE e UPDATE: Cadastra ou edita dependendo da presença do id_conquista
+ */
+async function salvarConquista(event) {
+  event.preventDefault();
+
+  const idInput = document.getElementById('id_conquista');
+  const nomeInput = document.getElementById('nome');
+  const criteriosInput = document.getElementById('criterios');
+
+  const id = idInput ? idInput.value : '';
+  const nome = nomeInput.value.trim();
+  const criterios = criteriosInput.value.trim();
+
+  if (!nome || !criterios) {
+    alert('Por favor, preencha o nome e os critérios da conquista.');
     return;
   }
 
-  lista.forEach((conquista, indice) => { //percorre todas as conquistas e pega o índice de cada uma
-    const idExibido = indice + 1; //cria um número para exibir na tabela começando em 1
+  // Cria o FormData simulando envio de formulário padrão (capturado pelo $_POST no PHP)
+  const formData = new FormData();
+  formData.append('nome', nome);
+  formData.append('criterios', criterios);
 
-    corpoTabela.innerHTML += `
-      <tr>
-        <td class="border border-gray-300 px-4 py-3">${idExibido}</td>
-        <td class="border border-gray-300 px-4 py-3">${conquista.nome}</td>
-        <td class="border border-gray-300 px-4 py-3">${conquista.descricao}</td>
-        <td class="border border-gray-300 px-4 py-3">
-          <div class="flex justify-center gap-2">
-            <button
-              type="button"
-              class="rounded-md bg-green-800 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-green-900"
-              onclick="carregar(${indice})">
-              Carregar
-            </button>
-            <button
-              type="button"
-              class="rounded-md bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-800"
-              onclick="excluir(${indice})">
-              Excluir
-            </button>
-          </div>
-        </td>
-      </tr>`; //adiciona uma nova linha na tabela
-  });
+  let urlFinal = `${URL_BASE}conquista_novo.php`;
+
+  // Se houver um ID preenchido no input oculto, vira um UPDATE
+  if (id) {
+    formData.append('id_conquista', id);
+    urlFinal = `${URL_BASE}conquista_alterar.php`;
+  }
+
+  try {
+    const resposta = await fetch(urlFinal, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const mensagem = await resposta.text();
+
+    if (resposta.ok) {
+      alert(mensagem);
+      limparFormulario();
+      listarConquistas();
+    } else {
+      alert(`Falha: ${mensagem}`);
+    }
+  } catch (erro) {
+    console.error('Erro ao salvar conquista:', erro);
+    alert('Erro de conexão com o servidor.');
+  }
 }
 
-function excluir(indice) {
-  const lista = JSON.parse(localStorage.getItem('conquistas')) || []; //recupera a lista do localStorage
-  lista.splice(indice, 1); //remove a conquista pelo índice
-  localStorage.setItem('conquistas', JSON.stringify(lista)); //salva novamente a lista
-  document.getElementById('alterar').innerHTML = ''; //remove o botão de alteração
-  listar(); //atualiza a tabela
+/**
+ * Prepara o formulário para edição ao clicar no botão "Editar"
+ */
+function carregarParaEditar(id, nome, criterios) {
+  let idInput = document.getElementById('id_conquista');
+  if (!idInput) {
+    idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.id = 'id_conquista';
+    const form = document.getElementById('form-conquista') || document.querySelector('form');
+    form.appendChild(idInput);
+  }
+
+  idInput.value = id;
+  document.getElementById('nome').value = nome;
+  document.getElementById('criterios').value = criterios;
+
+  // Altera o texto do botão de envio para indicar a edição
+  const btnSubmit = document.querySelector('button[type="submit"]');
+  if (btnSubmit) {
+    btnSubmit.textContent = 'Atualizar Conquista';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function carregar(indice) { //carrega os dados da conquista nos campos
-  const lista = JSON.parse(localStorage.getItem('conquistas')) || []; //recupera a lista do localStorage
-  document.getElementById('conquistas_name').value = lista[indice].nome;
-  document.getElementById('conquistas_desc').value = lista[indice].descricao;
-  document.getElementById('alterar').innerHTML = `
-    <button
-      type="button"
-      class="rounded-md bg-green-800 px-5 py-2 font-medium text-white transition hover:bg-green-900"
-      onclick="alterar(${indice})">
-      Alterar
-    </button>`; //adiciona o botão Alterar passando o índice
-}
-
-function alterar(indice) {
-  const lista = JSON.parse(localStorage.getItem('conquistas')) || []; //recupera a lista do localStorage
-  lista[indice].nome = document.getElementById('conquistas_name').value.trim(); //altera os dados na lista
-  lista[indice].descricao = document.getElementById('conquistas_desc').value.trim();
-
-  if (!lista[indice].nome || !lista[indice].descricao) { //verifica se os campos estão vazios
+/**
+ * DELETE: Exclui uma conquista pelo ID via requisição POST
+ */
+async function excluirConquista(id) {
+  if (!confirm('Deseja realmente excluir esta conquista?')) {
     return;
   }
 
-  document.getElementById('alterar').innerHTML = ''; //remove o botão Alterar
-  localStorage.setItem('conquistas', JSON.stringify(lista)); //salva as alterações no localStorage
-  listar(); //atualiza a tabela
+  const formData = new FormData();
+  formData.append('id_conquista', id);
+
+  try {
+    const resposta = await fetch(`${URL_BASE}conquista_excluir.php`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const mensagem = await resposta.text();
+
+    if (resposta.ok) {
+      alert(mensagem);
+      listarConquistas();
+    } else {
+      alert(`Falha ao excluir: ${mensagem}`);
+    }
+  } catch (erro) {
+    console.error('Erro ao excluir conquista:', erro);
+    alert('Erro ao tentar conectar ao servidor.');
+  }
 }
 
-listar(); //mostra as conquistas salvas quando a página é aberta
+/**
+ * Limpa os campos e redefine o botão após cadastro/edição
+ */
+function limparFormulario() {
+  const idInput = document.getElementById('id_conquista');
+  if (idInput) idInput.value = '';
+
+  const nomeInput = document.getElementById('nome');
+  if (nomeInput) nomeInput.value = '';
+
+  const criteriosInput = document.getElementById('criterios');
+  if (criteriosInput) criteriosInput.value = '';
+
+  const btnSubmit = document.querySelector('button[type="submit"]');
+  if (btnSubmit) {
+    btnSubmit.textContent = 'Cadastrar Conquista';
+  }
+}
