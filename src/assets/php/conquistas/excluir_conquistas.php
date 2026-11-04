@@ -1,5 +1,5 @@
 <?php
-require_once '../conexao.php';
+include_once __DIR__ . "/../conexao.php";
 header('Content-Type: application/json; charset=utf-8');
 
 $id = $_POST['id_conquista'] ?? '';

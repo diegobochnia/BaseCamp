@@ -1,4 +1,4 @@
-const URL_BASE = '../php/conquistas/';
+const URL_BASE = "../assets/php/conquistas/";
 
 document.addEventListener('DOMContentLoaded', () => {
   listarConquistas();
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function listarConquistas() {
   try {
-    const resposta = await fetch(`${URL_BASE}conquista_get.php`);
+    const resposta = await fetch(`${URL_BASE}listar_conquistas.php`);
     const json = await resposta.json();
 
     const tbody = document.getElementById('corpoTabela');
@@ -81,10 +81,10 @@ async function salvarConquista() {
   formData.append('conquistas_desc', descricao);
   formData.append('conquistas_criterios', criterios);
 
-  let url = `${URL_BASE}conquista_novo.php`;
+  let url = `${URL_BASE}cadastrar_conquistas.php`;
   if (id) {
     formData.append('id_conquista', id);
-    url = `${URL_BASE}conquista_alterar.php`;
+    url = `${URL_BASE}alterar_conquistas.php`;
   }
 
   try {
@@ -126,7 +126,7 @@ async function excluirConquista(id) {
   formData.append('id_conquista', id);
 
   try {
-    const resposta = await fetch(`${URL_BASE}conquista_excluir.php`, {
+    const resposta = await fetch(`${URL_BASE}excluir_conquistas.php`, {
       method: 'POST',
       body: formData,
     });

@@ -1,5 +1,5 @@
 <?php
-require_once '../conexao.php';
+include_once __DIR__ . "/../conexao.php";
 header('Content-Type: application/json; charset=utf-8');
 
 $sql = "SELECT id_conquista, nome, descricao, criterios FROM conquista ORDER BY nome ASC";
