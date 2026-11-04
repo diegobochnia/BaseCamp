@@ -89,7 +89,7 @@ base-camp/
 │   └── desenvolvimento-web/
 └── src/
     ├── index.html
-    ├── assests/
+    ├── assets/
     │   ├── login.js
     │   └── js/
     │       ├── cabecalho.js
@@ -109,4 +109,4 @@ base-camp/
         └── avisos.html
 ```
 
-A grafia `assests` corresponde à pasta existente e aos caminhos utilizados no código. Os modelos e scripts do banco estão centralizados na documentação de Arquitetura de Banco de Dados.
+A grafia `assets` corresponde à pasta existente e aos caminhos utilizados no código. Os modelos e scripts do banco estão centralizados na documentação de Arquitetura de Banco de Dados.

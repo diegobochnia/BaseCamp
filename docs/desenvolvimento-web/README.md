@@ -90,7 +90,7 @@ base-camp/
     │   ├── atividades.html
     │   ├── conquistas.html
     │   └── avisos.html
-    └── assests/
+    └── assets/
         └── js/
             ├── integrantes.js
             ├── secoes.js
@@ -99,7 +99,7 @@ base-camp/
             └── avisos.js
 ```
 
-A grafia `assests` corresponde à pasta existente na entrega e deve ser preservada nessa cópia, pois os caminhos dos scripts dependem dela.
+A grafia `assets` corresponde à pasta existente na entrega e deve ser preservada nessa cópia, pois os caminhos dos scripts dependem dela.
 
 ## Roteiro de verificação
 
