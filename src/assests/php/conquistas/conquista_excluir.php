@@ -1,20 +1,21 @@
 <?php
-// Sobe um nível para acessar a conexão na pasta php/
 require_once '../conexao.php';
+header('Content-Type: application/json; charset=utf-8');
 
-// Recebe o ID do item que deve ser deletado
 $id = $_POST['id_conquista'] ?? '';
 
 if (empty($id)) {
-    http_response_code(400);
-    echo "ID da conquista não informado.";
+    echo json_encode(["status" => "erro", "mensagem" => "ID inválido.", "data" => []]);
     exit;
 }
 
-// Executa a exclusão com bind param para segurança
-$sql = "DELETE FROM conquista WHERE id_conquista = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute(['id' => $id]);
+$sql = "DELETE FROM conquista WHERE id_conquista = ?";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("i", $id);
 
-echo "Conquista excluída com sucesso!";
+if ($stmt->execute()) {
+    echo json_encode(["status" => "ok", "mensagem" => "Conquista excluída com sucesso.", "data" => []]);
+} else {
+    echo json_encode(["status" => "erro", "mensagem" => "Erro ao excluir conquista.", "data" => []]);
+}
 ?>

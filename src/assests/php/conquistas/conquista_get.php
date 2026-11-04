@@ -1,13 +1,17 @@
 <?php
-// Sobe um nível para acessar a conexão na pasta php/
 require_once '../conexao.php';
-
-// Consulta todas as conquistas cadastradas
-$sql = "SELECT id_conquista, nome, criterios FROM conquista ORDER BY nome ASC";
-$stmt = $pdo->query($sql);
-$conquistas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Informa que a resposta é um JSON e imprime a lista
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($conquistas);
+
+$sql = "SELECT id_conquista, nome, descricao, criterios FROM conquista ORDER BY nome ASC";
+$result = $conexao->query($sql);
+
+$conquistas = [];
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $conquistas[] = $row;
+    }
+    echo json_encode(["status" => "ok", "mensagem" => "Listagem concluída.", "data" => $conquistas]);
+} else {
+    echo json_encode(["status" => "erro", "mensagem" => "Falha na busca dos registros.", "data" => []]);
+}
 ?>

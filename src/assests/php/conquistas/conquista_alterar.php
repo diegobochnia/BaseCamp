@@ -1,27 +1,24 @@
 <?php
-// Sobe um nível para acessar a conexão na pasta php/
 require_once '../conexao.php';
+header('Content-Type: application/json; charset=utf-8');
 
-// Recebe os dados atualizados e o ID
 $id = $_POST['id_conquista'] ?? '';
-$nome = $_POST['nome'] ?? '';
-$criterios = $_POST['criterios'] ?? '';
+$nome = $_POST['conquistas_name'] ?? '';
+$descricao = $_POST['conquistas_desc'] ?? '';
+$criterios = $_POST['conquistas_criterios'] ?? '';
 
-// Validação simples do ID e campos
-if (empty($id) || empty($nome) || empty($criterios)) {
-    http_response_code(400);
-    echo "Dados incompletos para a atualização.";
+if (empty($id) || empty($nome) || empty($descricao) || empty($criterios)) {
+    echo json_encode(["status" => "erro", "mensagem" => "Dados incompletos para atualização.", "data" => []]);
     exit;
 }
 
-// Atualiza o registro correspondente no banco
-$sql = "UPDATE conquista SET nome = :nome, criterios = :criterios WHERE id_conquista = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
-    'nome' => $nome,
-    'criterios' => $criterios,
-    'id' => $id
-]);
+$sql = "UPDATE conquista SET nome = ?, descricao = ?, criterios = ? WHERE id_conquista = ?";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("sssi", $nome, $descricao, $criterios, $id);
 
-echo "Conquista atualizada com sucesso!";
+if ($stmt->execute()) {
+    echo json_encode(["status" => "ok", "mensagem" => "Conquista atualizada com sucesso.", "data" => []]);
+} else {
+    echo json_encode(["status" => "erro", "mensagem" => "Erro ao atualizar conquista.", "data" => []]);
+}
 ?>

@@ -1,25 +1,23 @@
 <?php
-// Sobe um nível para acessar a conexão na pasta php/
 require_once '../conexao.php';
+header('Content-Type: application/json; charset=utf-8');
 
-// Recebe os dados enviados via POST pelo formulário
-$nome = $_POST['nome'] ?? '';
-$criterios = $_POST['criterios'] ?? '';
+$nome = $_POST['conquistas_name'] ?? '';
+$descricao = $_POST['conquistas_desc'] ?? '';
+$criterios = $_POST['conquistas_criterios'] ?? '';
 
-// Validação básica para evitar campos em branco
-if (empty($nome) || empty($criterios)) {
-    http_response_code(400);
-    echo "Preencha todos os campos obrigatórios.";
+if (empty($nome) || empty($descricao) || empty($criterios)) {
+    echo json_encode(["status" => "erro", "mensagem" => "Preencha todos os campos.", "data" => []]);
     exit;
 }
 
-// Prepara e executa a inserção no banco de dados com parâmetros seguros
-$sql = "INSERT INTO conquista (nome, criterios) VALUES (:nome, :criterios)";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
-    'nome' => $nome,
-    'criterios' => $criterios
-]);
+$sql = "INSERT INTO conquista (nome, descricao, criterios) VALUES (?, ?, ?)";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("sss", $nome, $descricao, $criterios);
 
-echo "Conquista cadastrada com sucesso!";
+if ($stmt->execute()) {
+    echo json_encode(["status" => "ok", "mensagem" => "Conquista cadastrada com sucesso.", "data" => []]);
+} else {
+    echo json_encode(["status" => "erro", "mensagem" => "Erro ao cadastrar conquista.", "data" => []]);
+}
 ?>
