@@ -12,6 +12,6 @@ if ($result) {
     }
     echo json_encode(["status" => "ok", "mensagem" => "Listagem concluída.", "data" => $conquistas]);
 } else {
-    echo json_encode(["status" => "erro", "mensagem" => "Falha na busca dos registros.", "data" => []]);
+    echo json_encode(["status" => "nok", "mensagem" => "Falha na busca dos registros.", "data" => []]);
 }
 ?>

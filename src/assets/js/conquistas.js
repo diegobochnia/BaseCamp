@@ -1,12 +1,13 @@
-const URL_BASE = "../assets/php/conquistas/";
+const URL_BASE = '../assets/php/conquistas/';
 
 document.addEventListener('DOMContentLoaded', () => {
   listarConquistas();
 
   const btnSalvar = document.getElementById('btnSalvar');
-  if (btnSalvar) {
-    btnSalvar.addEventListener('click', salvarConquista);
-  }
+  const btnCancelar = document.getElementById('btnCancelar');
+
+  if (btnSalvar) btnSalvar.addEventListener('click', salvarConquista);
+  if (btnCancelar) btnCancelar.addEventListener('click', limparFormulario);
 });
 
 async function listarConquistas() {
@@ -19,7 +20,7 @@ async function listarConquistas() {
     tbody.innerHTML = '';
 
     if (json.status !== 'ok') {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center">${json.mensagem}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">${json.mensagem}</td></tr>`;
       return;
     }
 
@@ -27,37 +28,24 @@ async function listarConquistas() {
       const tr = document.createElement('tr');
       tr.className = 'border-b hover:bg-gray-50';
 
-      const tdId = document.createElement('td');
-      tdId.className = 'py-2 px-4';
-      tdId.textContent = conquista.id_conquista;
+      tr.innerHTML = `
+        <td class="py-2 px-4">${conquista.id_conquista}</td>
+        <td class="py-2 px-4 font-medium">${conquista.nome}</td>
+        <td class="py-2 px-4">${conquista.descricao}</td>
+        <td class="py-2 px-4">${conquista.criterios}</td>
+        <td class="py-2 px-4 flex gap-2 justify-center">
+            <button class="btn-editar bg-blue-600 text-white px-3 py-1 rounded text-sm">Editar</button>
+            <button class="btn-excluir bg-red-600 text-white px-3 py-1 rounded text-sm">Excluir</button>
+        </td>
+      `;
 
-      const tdNome = document.createElement('td');
-      tdNome.className = 'py-2 px-4 font-medium';
-      tdNome.textContent = conquista.nome;
+      tr.querySelector('.btn-editar').addEventListener('click', () =>
+        carregarParaEditar(conquista),
+      );
+      tr.querySelector('.btn-excluir').addEventListener('click', () =>
+        excluirConquista(conquista.id_conquista),
+      );
 
-      const tdDesc = document.createElement('td');
-      tdDesc.className = 'py-2 px-4';
-      tdDesc.textContent = conquista.descricao;
-
-      const tdCriterios = document.createElement('td');
-      tdCriterios.className = 'py-2 px-4';
-      tdCriterios.textContent = conquista.criterios;
-
-      const tdAcoes = document.createElement('td');
-      tdAcoes.className = 'py-2 px-4 flex gap-2';
-
-      const btnEditar = document.createElement('button');
-      btnEditar.textContent = 'Editar';
-      btnEditar.className = 'bg-blue-600 text-white px-3 py-1 rounded text-sm';
-      btnEditar.addEventListener('click', () => carregarParaEditar(conquista));
-
-      const btnExcluir = document.createElement('button');
-      btnExcluir.textContent = 'Excluir';
-      btnExcluir.className = 'bg-red-600 text-white px-3 py-1 rounded text-sm';
-      btnExcluir.addEventListener('click', () => excluirConquista(conquista.id_conquista));
-
-      tdAcoes.append(btnEditar, btnExcluir);
-      tr.append(tdId, tdNome, tdDesc, tdCriterios, tdAcoes);
       tbody.appendChild(tr);
     });
   } catch (erro) {
@@ -109,6 +97,7 @@ function carregarParaEditar(conquista) {
     idInput.id = 'id_conquista';
     document.body.appendChild(idInput);
   }
+
   idInput.value = conquista.id_conquista;
   document.getElementById('conquistas_name').value = conquista.nome;
   document.getElementById('conquistas_desc').value = conquista.descricao;
@@ -116,6 +105,11 @@ function carregarParaEditar(conquista) {
   if (document.getElementById('conquistas_criterios')) {
     document.getElementById('conquistas_criterios').value = conquista.criterios;
   }
+
+  // Mostra o botão cancelar e muda o texto do botão salvar
+  document.getElementById('btnCancelar').classList.remove('hidden');
+  document.getElementById('btnSalvar').textContent = 'Atualizar';
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -133,16 +127,28 @@ async function excluirConquista(id) {
     const json = await resposta.json();
 
     alert(json.mensagem);
-    if (json.status === 'ok') listarConquistas();
+    if (json.status === 'ok') {
+      listarConquistas();
+      limparFormulario(); // Limpa se estava editando o item excluído
+    }
   } catch (erro) {
     console.error('Erro na exclusão:', erro);
   }
 }
 
 function limparFormulario() {
-  if (document.getElementById('id_conquista')) document.getElementById('id_conquista').value = '';
+  const idInput = document.getElementById('id_conquista');
+  if (idInput) idInput.value = '';
+
   document.getElementById('conquistas_name').value = '';
   document.getElementById('conquistas_desc').value = '';
-  if (document.getElementById('conquistas_criterios'))
-    document.getElementById('conquistas_criterios').value = '';
+
+  const inputCriterios = document.getElementById('conquistas_criterios');
+  if (inputCriterios) inputCriterios.value = '';
+
+  const btnCancelar = document.getElementById('btnCancelar');
+  if (btnCancelar) btnCancelar.classList.add('hidden');
+
+  const btnSalvar = document.getElementById('btnSalvar');
+  if (btnSalvar) btnSalvar.textContent = 'Enviar';
 }
