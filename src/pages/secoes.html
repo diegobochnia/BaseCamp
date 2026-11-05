@@ -42,7 +42,7 @@
         <section class="rounded-md bg-zinc-100 p-4 shadow-sm">
             <form id="formSecao" class="flex flex-col gap-3">
                 <input type="hidden" id="id_secao" name="id_secao">
-                <input type="text" id="inputNome" name="nome" class="rounded border p-2" placeholder="Digite um nome" required>
+                <input type="text" id="inputNome" name="nome" class="rounded border p-2" placeholder="Digite um nome" maxlength="100" required>
 
                 <select id="grupos" name="id_grupo" class="rounded border border-green-900 p-2" required>
                     <option value="">Carregando grupos...</option>
@@ -59,10 +59,9 @@
                 <button id="cancelarEdicao" type="button" class="hidden rounded border px-4 py-2">
                     Cancelar
                 </button>
-                <div id="areaAlterar" class="flex gap-2"></div>
             </form>
 
-            <div id="Resultado" class="mt-4 rounded bg-white p-4"></div>
+            <div id="Resultado" class="mt-4 rounded bg-white p-4" role="status" aria-live="polite"></div>
 
             <div class="mt-4 overflow-x-auto">
                 <table class="w-full border border-green-900">
@@ -72,6 +71,7 @@
                             <th class="border border-green-900 px-4 py-2">Nome</th>
                             <th class="border border-green-900 px-4 py-2">Ramo</th>
                             <th class="border border-green-900 px-4 py-2">Grupo</th>
+                            <th class="border border-green-900 px-4 py-2">Situação</th>
                             <th class="border border-green-900 px-4 py-2">Ações</th>
                         </tr>
                     </thead>
