@@ -40,21 +40,24 @@
         <h1 class="text-2xl font-bold text-green-900">Seções</h1>
 
         <section class="rounded-md bg-zinc-100 p-4 shadow-sm">
-            <form class="flex flex-col gap-3">
-                <input type="text" id="inputNome" class="rounded border p-2" placeholder="Digite um nome">
+            <form id="formSecao" class="flex flex-col gap-3">
+                <input type="hidden" id="id_secao" name="id_secao">
+                <input type="text" id="inputNome" name="nome" class="rounded border p-2" placeholder="Digite um nome" required>
 
-                <select id="ramos" class="rounded border border-green-900 p-2">
-                    <option value="">Selecione o alinhamento</option>
-                    <option value="Lobinho">Lobinho</option>
-                    <option value="Escoteiro">Escoteiro</option>
-                    <option value="Sênior">Sênior</option>
-                    <option value="Pioneiro">Pioneiro</option>
-                    <option value="Chefe">Chefe</option>
+                <select id="grupos" name="id_grupo" class="rounded border border-green-900 p-2" required>
+                    <option value="">Carregando grupos...</option>
+                </select>
+
+                <select id="ramos" name="id_ramo" class="rounded border border-green-900 p-2" required>
+                    <option value="">Carregando ramos...</option>
                 </select>
 
                 <button id="adicionarTexto" type="button"
                     class="rounded bg-green-900 px-4 py-2 text-white hover:bg-green-800">
                     Adicionar Seção
+                </button>
+                <button id="cancelarEdicao" type="button" class="hidden rounded border px-4 py-2">
+                    Cancelar
                 </button>
                 <div id="areaAlterar" class="flex gap-2"></div>
             </form>
@@ -68,6 +71,7 @@
                             <th class="border border-green-900 px-4 py-2">ID</th>
                             <th class="border border-green-900 px-4 py-2">Nome</th>
                             <th class="border border-green-900 px-4 py-2">Ramo</th>
+                            <th class="border border-green-900 px-4 py-2">Grupo</th>
                             <th class="border border-green-900 px-4 py-2">Ações</th>
                         </tr>
                     </thead>
