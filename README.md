@@ -1,178 +1,112 @@
-# Base Camp
+# BaseCamp
 
-Plataforma web para apoiar a organização, a comunicação e o acompanhamento das atividades do grupo escoteiro.
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
-> Projeto acadêmico integrado das disciplinas de **Engenharia de Requisitos**, **Desenvolvimento Web** e **Administração de Banco de Dados**.
-
-## Sobre o projeto
-
-O **Base Camp** está sendo desenvolvido pela equipe **Escoteiros do BOB** com o propósito de centralizar informações importantes para o funcionamento de um grupo escoteiro.
-
-A plataforma deverá auxiliar no gerenciamento de seções, atividades, conquistas, eventos, avisos e informações administrativas. Também contará com uma área pública para apresentar a história do grupo, seus contatos e respostas para dúvidas frequentes.
+Aplicação web para apoiar a organização de um grupo escoteiro, desenvolvida pela equipe **Escoteiros do BOB**, no curso de Engenharia de Software da **PUCPR**.
 
 ## Objetivo
 
-Desenvolver uma aplicação web responsiva, acessível e segura que facilite a organização interna do grupo escoteiro, melhore a comunicação entre seus participantes e disponibilize informações úteis ao público.
+Centralizar atividades, participação dos integrantes, conquistas, avisos e movimentações financeiras de um grupo escoteiro. Disponibilizar informações institucionais ao público e funcionalidades internas conforme o perfil do usuário.
 
-## Status
+## Estado atual
 
-🚧 **Em desenvolvimento — primeira entrega de Desenvolvimento Web**
-
-Nesta etapa, o objetivo é implementar cinco CRUDs completos utilizando JavaScript e o LocalStorage do navegador. Não será desenvolvido um sistema de login nesta entrega.
-
-## Primeira entrega de Desenvolvimento Web
-
-Como a equipe possui cinco integrantes, serão desenvolvidos cinco CRUDs. Cada CRUD deverá permitir cadastrar, listar, editar e excluir registros.
-
-| CRUD | Operações previstas | Armazenamento sugerido |
-| --- | --- | --- |
-| Seções | Cadastrar, listar, editar e excluir seções | `basecamp_secoes` |
-| Atividades | Cadastrar, listar, editar e excluir atividades | `basecamp_atividades` |
-| Conquistas | Cadastrar, listar, editar e excluir conquistas | `basecamp_conquistas` |
-| Calendário | Cadastrar, listar, editar e excluir eventos | `basecamp_eventos` |
-| Avisos | Cadastrar, listar, editar e excluir avisos | `basecamp_avisos` |
-
-Os dados serão representados por listas de objetos e armazenados utilizando:
-
-- `localStorage.setItem()`;
-- `localStorage.getItem()`;
-- `JSON.stringify()`;
-- `JSON.parse()`.
-
-## Funcionalidades gerais previstas
-
-- Gerenciamento das seções do grupo;
-- Gerenciamento de atividades;
-- Registro de conquistas dos integrantes;
-- Controle de informações financeiras;
-- Calendário de eventos e compromissos;
-- Publicação e consulta de avisos;
-- Consulta ao perfil do usuário;
-- Apresentação da história e dos contatos do grupo;
-- Área de perguntas frequentes;
-- Controle de acesso de acordo com o perfil do usuário.
-
-## Perfis previstos
-
-| Perfil | Acesso esperado |
+| Área | Situação |
 | --- | --- |
-| Público | História do grupo, contatos e perguntas frequentes. |
-| Integrante | Perfil pessoal, atividades, conquistas, calendário e avisos. |
-| Chefe | Organização das seções, atividades, conquistas, calendário e avisos. |
-| Administrador | Gerenciamento geral, informações financeiras e permissões. |
+| Desenvolvimento Web | Primeira entrega com cinco CRUDs independentes em JavaScript e LocalStorage, registrada por commit. O código atual inclui melhorias no cabeçalho e na navegação. |
+| Arquitetura de Banco de Dados | Modelos conceitual e lógico revisados; SQL com 16 tabelas e 95 registros fictícios, três relatórios com INNER JOIN e evidências de conferência no XAMPP. |
+| Engenharia de Requisitos | 23 requisitos funcionais e 5 não funcionais, documentação das Sprints 1 e 2 e diagrama de casos de uso. O documento consolidado da Sprint 3 está em revisão pela equipe. |
+| Integração | Integração da aplicação com o banco, autenticação efetiva e controle de permissões previstos para a evolução do projeto. |
+
+A documentação descreve o produto final previsto. Sua existência não significa que todas as funcionalidades estejam implementadas na aplicação atual.
+
+## Documentação por disciplina
+
+- [Engenharia de Requisitos](docs/engenharia-de-requisitos/README.md): requisitos, usuários, permissões, elicitação, regras de negócio e entregas por sprint.
+- [Arquitetura de Banco de Dados](docs/arquitetura-de-banco-de-dados/README.md): modelos, scripts SQL, relatórios e evidências.
+- [Desenvolvimento Web](docs/desenvolvimento-web/README.md): primeira entrega, responsabilidades, execução e roteiro de verificação dos CRUDs.
+
+O [DOCX consolidado da Sprint 3](docs/engenharia-de-requisitos/entregas/sprint-03/BaseCamp_Sprint_3.docx) permanece em revisão. Sua versão final em PDF será incluída em outro commit, após a revisão da equipe. A apresentação de Banco de Dados foi entregue no AVA e não integra este repositório.
+
+## Equipe e responsabilidades nos CRUDs
+
+| Integrante | CRUD da primeira entrega |
+| --- | --- |
+| Diego Rhian Bochnia | Avisos |
+| Guilherme Moczedlo Kadubitzki | Integrantes |
+| Luigi Ulbrich Pietrobon | Seções |
+| Pedro Chaves Steck | Atividades |
+| Vinicius Dias Marcondes da Cruz | Conquistas |
+
+Cada CRUD permite cadastrar, listar, editar e excluir registros. A versão da primeira entrega está registrada no commit [0c63d97](https://github.com/diegobochnia/BaseCamp/tree/0c63d978128d7e1c3f8e37a46319e0b08475bd09).
 
 ## Tecnologias
 
-### Etapa atual
+- HTML e JavaScript.
+- Tailwind CSS carregado por CDN.
+- LocalStorage e JSON na aplicação atual.
+- SQL, com tabelas InnoDB e codificação utf8mb4, no banco revisado.
+- XAMPP, Apache e phpMyAdmin para execução e conferência local.
+- Git e GitHub para versionamento.
+- draw.io e Astah para os modelos e diagramas.
 
-- HTML5;
-- CSS3;
-- JavaScript;
-- LocalStorage;
-- Bootstrap, opcionalmente.
+## Executar a aplicação atual
 
-### Etapas futuras
+1. Copie a pasta do projeto para `C:\xampp\htdocs\base-camp`.
+2. Abra o XAMPP Control Panel e inicie o **Apache**.
+3. Acesse [http://localhost/base-camp/src/](http://localhost/base-camp/src/).
+4. Utilize o menu para acessar Integrantes, Seções, Atividades, Conquistas e Avisos.
 
-- MySQL para persistência dos dados;
-- Integração entre a interface web e o banco de dados;
-- Autenticação e controle de acesso por perfil.
+Para executar os cinco CRUDs, não é necessário iniciar o MySQL nem importar os scripts SQL. A estilização por CDN requer acesso à internet.
 
-Na primeira entrega, os dados permanecerão no LocalStorage. Nas etapas posteriores, os CRUDs serão aproveitados e adaptados para utilizar a persistência definida no projeto de Banco de Dados.
+Os dados são salvos no LocalStorage da origem da aplicação e do perfil do navegador, por meio de `localStorage.getItem()`, `localStorage.setItem()`, `JSON.parse()` e `JSON.stringify()`. Permanecem após recarregar a página, desde que o armazenamento não seja apagado. Outro navegador ou perfil tem seus próprios registros; em navegação anônima, o armazenamento é temporário.
 
-## Organização do repositório
+### Tela de login
+
+A página de login está presente como parte da evolução da interface. O script solicita `/api/login`, mas este repositório ainda não contém a API correspondente. O link de criação de conta aponta para `cadastro.html`, página ainda não incluída. A tela não deve ser usada como evidência de autenticação ou de controle de acesso implementados.
+
+## Executar o banco separadamente
+
+1. Inicie **Apache** e **MySQL** no XAMPP e abra [phpMyAdmin](http://localhost/phpmyadmin).
+2. Em uma instalação nova, importe [basecamp_v2_completo.sql](docs/arquitetura-de-banco-de-dados/sql/basecamp_v2_completo.sql), em formato SQL e UTF-8.
+3. Confira o banco `basecamp_v2`. Se ele já estiver preenchido, execute somente as consultas de relatórios e validação, sem repetir a criação ou a carga.
+4. Consulte as [instruções detalhadas do SQL](docs/arquitetura-de-banco-de-dados/sql/README.md).
+
+O banco revisado é instalado separadamente da versão anterior. Importar o SQL não conecta automaticamente os CRUDs ao banco.
+
+Na conferência local, foram confirmados 16 tabelas, 95 registros, 16 chaves primárias, 24 chaves estrangeiras e 8 restrições UNIQUE. Os relatórios retornaram 11, 8 e 6 linhas; o saldo financeiro foi de 700,00 e as sete verificações de inconsistências retornaram zero problemas. As [evidências estão disponíveis na documentação da disciplina](docs/arquitetura-de-banco-de-dados/README.md#evidências).
+
+## Estrutura principal
 
 ```text
 base-camp/
 ├── README.md
-├── .gitignore
-├── src/
-│   ├── index.html
-│   ├── pages/
-│   └── assets/
-│       ├── css/
-│       ├── js/
-│       └── img/
-├── database/
-│   ├── modelagem/
-│   └── scripts/
-└── docs/
-    ├── engenharia-de-requisitos/
-    │   └── sprint-01/
-    ├── desenvolvimento-web/
-    │   └── sprint-01/
-    └── banco-de-dados/
-        └── sprint-01/
+├── docs/
+│   ├── engenharia-de-requisitos/
+│   ├── arquitetura-de-banco-de-dados/
+│   │   ├── modelos/
+│   │   ├── sql/
+│   │   └── evidências/
+│   └── desenvolvimento-web/
+└── src/
+    ├── index.html
+    ├── assets/
+    │   ├── login.js
+    │   └── js/
+    │       ├── cabecalho.js
+    │       ├── integrantes.js
+    │       ├── secoes.js
+    │       ├── atividades.js
+    │       ├── conquistas.js
+    │       └── avisos.js
+    └── pages/
+        ├── images/
+        │   └── logo-basecamp.png
+        ├── login.html
+        ├── integrantes.html
+        ├── secoes.html
+        ├── atividades.html
+        ├── conquistas.html
+        └── avisos.html
 ```
 
-- `src/`: código atual da aplicação;
-- `database/`: modelos e scripts produzidos para o banco de dados;
-- `docs/`: documentos, checklists e evidências organizados por disciplina e sprint.
-
-O código não será duplicado dentro das pastas de cada sprint. As versões entregues serão preservadas por meio do histórico do Git, de tags e de releases.
-
-## Versionamento e fluxo de trabalho
-
-A branch `main` deverá conter a versão integrada e estável do projeto. Cada tela será desenvolvida em uma branch própria, conforme as regras da atividade.
-
-Exemplos:
-
-```text
-feature/estrutura-interface
-feature/tela-secoes
-feature/tela-atividades
-feature/tela-conquistas
-feature/tela-calendario
-feature/tela-avisos
-```
-
-Ao final da primeira entrega de Desenvolvimento Web, será criada a tag:
-
-```text
-entrega-web-sprint-01
-```
-
-Essa tag preservará a versão exata da aplicação com os cinco CRUDs utilizando LocalStorage, mesmo depois que o projeto avançar para novas etapas.
-
-## Como executar
-
-1. Clone o repositório:
-
-```bash
-git clone URL_DO_REPOSITORIO
-```
-
-2. Acesse a pasta do projeto:
-
-```bash
-cd base-camp
-```
-
-3. Abra o arquivo `src/index.html` no navegador.
-
-Também é possível executar o projeto utilizando uma extensão de servidor local, como o Live Server do Visual Studio Code.
-
-## Requisitos de qualidade
-
-A aplicação deverá:
-
-- Ser responsiva em computadores, tablets e smartphones;
-- Apresentar uma interface clara e consistente;
-- Possuir recursos básicos de acessibilidade;
-- Armazenar e recuperar os dados corretamente;
-- Permitir a utilização completa dos cinco CRUDs;
-- Ser testada em outro navegador ou em uma janela anônima antes da entrega.
-
-## Metodologia
-
-O trabalho será organizado com Scrum. Os responsáveis pelos papéis da equipe, as atividades, a Sprint Review e a Sprint Retrospective serão registrados na documentação de cada sprint.
-
-## Equipe
-
-**Escoteiros do BOB**
-
-- Diego Rhian Bochnia;
-- Guilherme Moczedlo;
-- Luigi Pietrobon;
-- Pedro Chaves;
-- Vinicius Dias.
-
+A grafia `assets` corresponde à pasta existente e aos caminhos utilizados no código. Os modelos e scripts do banco estão centralizados na documentação de Arquitetura de Banco de Dados.

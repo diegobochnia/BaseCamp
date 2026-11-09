@@ -7,70 +7,111 @@
     <title>Avisos | BaseCamp</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../assets/js/cabecalho.js" defer></script>
 </head>
 
 <body>
     <header class="bg-green-900 text-white shadow-md">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
-
-            <a href="../index.html" class="text-2xl font-bold tracking-wide">
-                BaseCamp
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-4 px-4 py-4 sm:px-6 lg:flex-nowrap lg:gap-6">
+            <a href="../index.html" class="flex shrink-0 items-center gap-2 lg:gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-400" aria-label="BaseCamp — página inicial">
+                <img src="images/logo-basecamp.png" alt="" width="56" height="56" class="h-10 w-10 lg:h-14 lg:w-14 shrink-0 rounded-full object-contain" />
+                <span class="whitespace-nowrap text-xl font-bold lg:text-2xl tracking-wide"><span class="text-yellow-400">Base</span><span class="text-green-300">Camp</span></span>
             </a>
-
-            <nav aria-label="Navegação principal">
-                <ul class="flex items-center gap-2 text-sm font-medium">
-                    <li>
-                        <a href="../index.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Início
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="integrantes.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Integrantes
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="secoes.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Seções
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="atividades.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Atividades
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="conquistas.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Conquistas
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="avisos.html" aria-current="page"
-                            class="block rounded-md bg-green-800 px-4 py-2">
-                            Avisos
-                        </a>
-                    </li>
+            <div class="ml-auto flex items-center gap-2 lg:order-3 lg:ml-0">
+                <button type="button" data-menu-toggle aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu" class="flex h-11 w-11 items-center justify-center rounded-md transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 lg:hidden">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+                <a href="login.html" aria-label="Entrar" class="flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 shrink-0" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21v-2a8 8 0 0 1 16 0v2" /></svg><span class="hidden lg:inline">Entrar</span></a>
+            </div>
+            <nav id="menu-principal" aria-label="Navegação principal" class="hidden w-full min-w-0 lg:order-2 lg:block lg:w-auto lg:ml-auto">
+                <ul class="flex flex-col gap-2 text-sm font-medium lg:flex-row lg:items-center">
+                    <li><a href="../index.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Início</a></li>
+                    <li><a href="integrantes.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Integrantes</a></li>
+                    <li><a href="secoes.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Seções</a></li>
+                    <li><a href="atividades.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Atividades</a></li>
+                    <li><a href="conquistas.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Conquistas</a></li>
+                    <li><a href="avisos.html" aria-current="page" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 bg-green-800 font-bold text-yellow-300 ring-1 ring-inset ring-green-600">Avisos</a></li>
                 </ul>
             </nav>
-
         </div>
     </header>
 
-    <main class="mx-auto max-w-6xl px-8 py-8">
-        <h1 class="text-2xl font-bold text-green-900">Avisos</h1>
+    <main class="mx-auto max-w-7xl px-8 py-8">
+        <div class="flex justify-between items-center w-full">
+            <h1 class="text-2xl font-bold text-green-900">Avisos</h1>
+        </div>
+        <section class="flex flex-col lg:flex-row w-full min-h-screen gap-6 p-6">
+
+            <div class="w-full lg:w-[70%] border border-black rounded-3xl p-6 bg-white">
+                <h2 class="text-xl font-bold text-green-800 mb-4">Lista de avisos</h2>
+                <div id="cardsAvisos" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <div id="campoNovoAviso"
+                class="w-full lg:w-1/3 border border-black rounded-3xl p-6 bg-white space-y-4 sticky top-6 self-start">
+                <h2 class="text-xl font-bold text-green-800">Novo Aviso</h2>
+
+                <form id="formAviso" class="space-y-4 w-full">
+
+                    <div class="w-full">
+                        <label for="avisoTitulo" class="block mb-1 text-sm font-semibold text-gray-700">Título:</label>
+                        <input type="text" id="avisoTitulo" name="titulo" placeholder="Digite o título do aviso"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-600 bg-gray-50/50">
+                    </div>
+
+                    <div class="w-full">
+                        <label for="avisoMensagem"
+                            class="block mb-1 text-sm font-semibold text-gray-700">Mensagem:</label>
+                        <textarea id="avisoMensagem" name="mensagem" rows="3" placeholder="Digite a mensagem do aviso"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-600 bg-gray-50/50 resize-none"></textarea>
+                    </div>
+
+                    <div class="w-full">
+                        <label for="avisoData" class="block mb-1 text-sm font-semibold text-gray-700">Data:</label>
+                        <input type="date" id="avisoData" name="data"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-600 bg-gray-50/50">
+                    </div>
+
+                    <div>
+                        <label for="avisoAutor" class="mb-1 block font-medium">Autor</label>
+                        <select id="avisoAutor" name="autor" required
+                            class="w-full rounded-lg border border-gray-300 p-2">
+                            <option value="">Selecione um autor</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="avisoVisibilidade" class="mb-1 block font-medium">
+                            Visibilidade
+                        </label>
+                        <select id="avisoVisibilidade" name="visibilidade" required
+                            class="w-full rounded-lg border border-gray-300 p-2">
+                            <option value="grupo" selected>Todo o grupo</option>
+                            <option value="publica">Pública</option>
+                            <option value="secao">Uma seção</option>
+                        </select>
+                    </div>
+
+                    <div id="campoAvisoSecao" hidden>
+                        <label for="avisoSecao" class="mb-1 block font-medium">Seção</label>
+                        <select id="avisoSecao" name="id_secao" disabled
+                            class="w-full rounded-lg border border-gray-300 p-2">
+                            <option value="">Selecione uma seção</option>
+                        </select>
+                    </div>
+
+
+
+                    <div class="pt-2">
+                        <button type="button" id="avisoPublicar"
+                            class="rounded-xl bg-green-700 px-6 py-2.5 text-white font-medium transition hover:bg-green-800">Publicar</button>
+                    </div>
+                    <div id="areaSalvarAviso" class="pt-2"></div>
+                </form>
+            </div>
+        </section>
     </main>
 
-    <script src="../assests/js/avisos.js"></script>
+    <script src="../assets/js/avisos.js"></script>
 </body>
-
 </html>
