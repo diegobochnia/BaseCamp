@@ -1,33 +1,84 @@
+let avisosCarregados = [];
+
 document.addEventListener("DOMContentLoaded", () => {
+    const botaoPublicar = document.getElementById("avisoPublicar");
+
+    botaoPublicar.addEventListener("click", async (evento) => {
+        evento.preventDefault();
+        console.log("Clique em Publicar recebido");
+
+        try {
+            await criaAviso();
+        } catch (erro) {
+            console.error("Erro ao publicar:", erro);
+            alert("Falha ao publicar. Confira o Console.");
+        }
+    });
     carregarAvisos();
+    carregarAutores();
 });
 
-document.getElementById('avisoPublicar').addEventListener('click', () => {
+
+async function criaAviso() {
     const titulo = document.getElementById('avisoTitulo').value //dados digitados no formulário
     const mensagem = document.getElementById('avisoMensagem').value
     const dataP = document.getElementById('avisoData').value
+    const autor = document.getElementById("avisoAutor").value;
+    const visibilidade = document.getElementById("avisoVisibilidade").value; 
 
-    if (!titulo || !mensagem || !dataP) { //verifica campos vazios
+    if (!titulo || !mensagem || !dataP || !autor || !visibilidade) { //verifica campos vazios
         alert("Por favor, preencha todos os campos!");
         return;
     }
 
-    criaAviso(titulo, mensagem, dataP); //quando clica em Publicar envia os dados para a função criaAviso
+    const fd = new FormData();
+    fd.append("titulo", titulo);
+    fd.append("mensagem", mensagem);
+    fd.append("data", dataP);
+    fd.append("autor", autor);
+    fd.append("visibilidade", visibilidade);
 
-    document.getElementById('avisoTitulo').value = ""; //limpa os campos do formulário após enviar
-    document.getElementById('avisoMensagem').value = "";
-    document.getElementById('avisoData').value = "";
-});
+    const resposta = await fetch("../assets/php/avisos/cadastrar_avisos.php", {
+        method: "POST",
+        body: fd
+    });
 
-function criaAviso(titulo, mensagem, data) {
-    const listaAvisos = JSON.parse(localStorage.getItem("listaAvisos")) || []; //pega a lista salva do localStorage ou se não existir cria um array vazia
-    listaAvisos.push({ titulo: titulo, mensagem: mensagem, data: data }); //cria um objeto com os dados e adiciona à listaAvisos
-    localStorage.setItem("listaAvisos", JSON.stringify(listaAvisos)); //salva no localStorage, JSON.stringify converte o array para string pois o localStorage armazena somente string
-    exibirAviso(titulo, mensagem, data, listaAvisos.length - 1); //chama a função para exibir o arquivo criado na tela
-                                                                // o lenght -1 representa o índice do aviso
-};
+    const retorno = await resposta.json();
 
-function exibirAviso(titulo, mensagem, data, indice) {
+    if (resposta.ok && retorno.status === "ok") {
+        alert("Sucesso: " + retorno.mensagem);
+        document.getElementById("formAviso").reset();
+        await carregarAvisos();
+    } else {
+        alert("Erro: " + retorno.mensagem);
+    }
+}
+
+async function carregarAutores() {
+    const select = document.getElementById("avisoAutor");
+
+    try {
+        const resposta = await fetch("../assets/php/avisos/listar_autores.php");
+        const retorno = await resposta.json();
+
+        if (!resposta.ok || retorno.status !== "ok") {
+            throw new Error(retorno.mensagem || "Falha ao consultar autores.");
+        }
+
+        for (const autor of retorno.data) {
+            select.add(new Option(autor.nome, autor.id_usuario));
+        }
+
+        if (retorno.data.length === 0) {
+            select.options[0].textContent = "Nenhum autor ativo cadastrado";
+        }
+    } catch (erro) {
+        select.options[0].textContent = "Erro ao carregar autores";
+        console.error(erro);
+    }
+}
+
+function exibirAviso(titulo, mensagem, data, idAviso) {
     const dataFormatada = data.split("-").reverse().join("/"); //converte a data
     const cardsAvisos = document.getElementById('cardsAvisos'); //pega a área que vai receber os cards
 
@@ -36,11 +87,11 @@ function exibirAviso(titulo, mensagem, data, indice) {
             <h3 class="font-bold text-lg text-green-800">${titulo}</h3>
             <p class="text-gray-600">${mensagem}</p>
             <span class="text-xs text-gray-400 block">Publicado em: ${dataFormatada}</span>
-            <button type="button" onclick="excluirAviso(${indice})"
+            <button type="button" onclick="excluirAviso(${idAviso})"
                 class="rounded-lg bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700">
                 Excluir
             </button>
-            <button type="button" onclick="alterarAviso(${indice})"
+            <button type="button" onclick="alterarAviso(${idAviso})"
                 class="ml-2 rounded-lg bg-amber-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-600">
                 Alterar
             </button>
@@ -48,56 +99,105 @@ function exibirAviso(titulo, mensagem, data, indice) {
     `; //acrescenta um novo card de aviso
 }
 
-function carregarAvisos() { //mostra todos os avisos salvos no localStorage
-    document.getElementById('cardsAvisos').innerHTML = ""; //apaga todos os cards para não duplicar
+async function carregarAvisos() {
+    try {
+        const resposta = await fetch(
+            "../assets/php/avisos/listar_avisos.php"
+        );
 
-    const listaAvisos = JSON.parse(localStorage.getItem("listaAvisos")) || []; //pega a a string do localStorage e convertr para array novamente
+        const retorno = await resposta.json();
 
-    for (let i = 0; i < listaAvisos.length; i++) { //percorre todos os avisos
-        exibirAviso(listaAvisos[i].titulo, listaAvisos[i].mensagem, listaAvisos[i].data, i); //pega os dados da listaAvisos e chama a função para exibir eles na tela
+        console.log(retorno);
+        if (retorno.status !== "ok") {
+            alert(retorno.mensagem);
+            return;
+        }
+
+        avisosCarregados = retorno.data;
+
+        document.getElementById("cardsAvisos").innerHTML = "";
+
+        for (const aviso of avisosCarregados) {
+            exibirAviso(
+                aviso.titulo,
+                aviso.mensagem,
+                aviso.publicado_em.split(" ")[0],
+                aviso.id_aviso
+            );
+        }
+    } catch (erro) {
+        console.error("Erro ao carregar avisos:", erro);
     }
+}
+
+async function excluirAviso(idAviso) {
+    const retorno = await fetch("../assets/php/avisos/excluir_avisos.php?id="+idAviso);
+    const resposta = await retorno.json();
+    if (resposta.status !== "ok") {
+        alert(resposta.mensagem || "Não foi possível excluir o aviso.");
+        return;
+    }
+
+    await carregarAvisos();
 };
 
-function excluirAviso(indice) {
-    const listaAvisos = JSON.parse(localStorage.getItem("listaAvisos")); //recupera a lista do localStorage
-    listaAvisos.splice(indice, 1); //remove o elemento do indice
-    localStorage.setItem("listaAvisos", JSON.stringify(listaAvisos)); //salva novamente
-    carregarAvisos(); //atualiza a página com todos os cards que restaram no localStorage
-};
+async function alterarAviso(idAviso) { //Preenche os campos do formulário com os dados do Banco
+    const retorno = await fetch("../assets/php/avisos/listar_avisos.php?id="+idAviso);
+    const resposta = await retorno.json();
+         if (resposta.status !== "ok" || !resposta.data[0]) {
+            alert(resposta.mensagem || "Aviso não encontrado.");
+            return;
+        }
+    
+        const registro = resposta.data[0];
+        document.getElementById("avisoTitulo").value = registro.titulo;
+        document.getElementById("avisoMensagem").value = registro.mensagem;
+        document.getElementById("avisoData").value = registro.publicado_em.split(" ")[0];
+        document.getElementById("avisoAutor").value = registro.autor;
+        document.getElementById("avisoVisibilidade").value = registro.visibilidade;
+        document.getElementById('areaSalvarAviso').innerHTML = //adiciona o botão de Salvar alteração
+            `<button type="button" onclick="salvarAlteracao(${idAviso})"
+            class="rounded-xl bg-amber-500 px-6 py-2.5 text-white font-medium hover:bg-amber-600">
+            Salvar alteração
+        </button>`;
+        document.getElementById('avisoPublicar').classList.add('hidden'); //oculta o botão de Publicar
+}
 
-function alterarAviso(indice) { //carrega os dados nos campos de alteração
-    const listaAvisos = JSON.parse(localStorage.getItem("listaAvisos")); //recupera a lista do localStorage
-    document.getElementById('avisoTitulo').value = listaAvisos[indice].titulo;
-    document.getElementById('avisoMensagem').value = listaAvisos[indice].mensagem;
-    document.getElementById('avisoData').value = listaAvisos[indice].data; //coloca todos os valores armazenados nos campos do formulário
-    document.getElementById('areaSalvarAviso').innerHTML = //adiciona o botão de Salvar alteração
-        `<button type="button" onclick="salvarAlteracao(${indice})"
-        class="rounded-xl bg-amber-500 px-6 py-2.5 text-white font-medium hover:bg-amber-600">
-        Salvar alteração
-    </button>`;
-    document.getElementById('avisoPublicar').classList.add('hidden'); //oculta o botão de Publicar
-};
+async function salvarAlteracao(idAviso) {
+    var titulo = document.getElementById('avisoTitulo').value; //lê os novos dados preenchidos nos campos de alteraçao
+    var mensagem = document.getElementById('avisoMensagem').value;
+    var data = document.getElementById('avisoData').value;
+    var autor = document.getElementById('avisoAutor').value;
+    var visibilidade =  document.getElementById('avisoVisibilidade').value;
 
-function salvarAlteracao(indice) {
-    const listaAvisos = JSON.parse(localStorage.getItem("listaAvisos")); //recupera a lista do localStorage
-
-    const titulo = document.getElementById('avisoTitulo').value; //lê os novos dados preenchidos nos campos de alteraçao
-    const mensagem = document.getElementById('avisoMensagem').value;
-    const data = document.getElementById('avisoData').value;
-
-    if (!titulo || !mensagem || !data) {
+    if (!titulo || !mensagem || !data || !autor || ! visibilidade) {
         alert("Por favor, preencha todos os campos!"); //verifica campos vazios na alteração
         return;
     }
 
-    listaAvisos[indice].titulo = titulo; //altera os dados na listaAvisos
-    listaAvisos[indice].mensagem = mensagem;
-    listaAvisos[indice].data = data;
+    const fd = new FormData();
+    fd.append("titulo", titulo);
+    fd.append("mensagem", mensagem);
+    fd.append("data", data);
+    fd.append("autor", autor);
+    fd.append("visibilidade", visibilidade);
+    
 
-    localStorage.setItem("listaAvisos", JSON.stringify(listaAvisos)); //salva as alterações no localStorage
-    carregarAvisos(); //atualiza a página com os novos dados salvos no localStorage
+    const retorno = await fetch("../assets/php/avisos/alterar_avisos.php?id=" + idAviso,
+        {
+          method: 'POST',
+          body: fd  
+        });
 
-    document.getElementById('formAviso').reset(); //limpa o formulário depois da alteração
-    document.getElementById('areaSalvarAviso').innerHTML = ""; //remove o botão Salvar alteração
-    document.getElementById('avisoPublicar').classList.remove('hidden'); //adiciona novamente o botão Publicar
+    const resposta = await retorno.json();
+
+    if(resposta.status === "ok"){
+        alert("SUCESSO: " + resposta.mensagem);
+        document.getElementById('formAviso').reset(); //limpa o formulário depois da alteração
+        document.getElementById('areaSalvarAviso').innerHTML = ""; //remove o botão Salvar alteração
+        document.getElementById('avisoPublicar').classList.remove('hidden'); //adiciona novamente o botão Publicar
+        await carregarAvisos();
+    }else{
+        alert("ERRO: " + resposta.mensagem);
+    }
 };
