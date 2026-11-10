@@ -14,8 +14,7 @@ $stmt = $conexao->prepare(
 SET id_secao = ?, titulo = ?, descricao = ?, inicio = ?, termino = ?, local = ?, situacao = ?
 WHERE id_atividade = ?'
 );
-// 'ssssii' = 4 strings + 2 integers (situacao e id_atividade)
-$stmt->bind_param('ssssii', $titulo, $descricao, $inicio, $termino, $local, $situacao, $_GET['id_atividade']);
+$stmt->bind_param('issssssi', $id_secao, $titulo, $descricao, $inicio, $termino, $local, $situacao, $_GET['id_atividade']);
 $stmt->execute();
 if ($stmt->affected_rows > 0) {
 $retorno['status'] = 'ok';
