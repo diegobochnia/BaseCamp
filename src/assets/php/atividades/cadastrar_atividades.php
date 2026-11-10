@@ -1,6 +1,24 @@
 <?php
 include_once('../conexao.php');
 $retorno = ['status' => '', 'mensagem' => '', 'data' => []];
+
+$camposObrigatorios = [
+    'id_secao', 'titulo', 'descricao', 'inicio', 'termino', 'local', 'situacao'
+];
+
+foreach ($camposObrigatorios as $campo) {
+    $valor = $_POST[$campo] ?? '';
+
+    if (!is_string($valor) || trim($valor) === '') {
+        $retorno['status'] = 'nok';
+        $retorno['mensagem'] = "Preencha o campo {$campo}.";
+
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($retorno);
+        exit;
+    }
+}
+
 $id_secao = $_POST['id_secao'];
 $titulo = $_POST['titulo'];
 $descricao = $_POST['descricao'];

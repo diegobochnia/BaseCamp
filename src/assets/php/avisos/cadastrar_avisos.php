@@ -23,9 +23,9 @@
     $publicadoEm = ($_POST['data'] ?? '') . ' 00:00:00';
     $visibilidade = $_POST['visibilidade'] ?? '';
 
-    if ($autor < 1 || !in_array($visibilidade, ['grupo', 'publica'], true)) {
+    if ($autor < 1 || !in_array($visibilidade, ['grupo', 'publica', 'secao'], true)) {
         $retorno['status'] = 'nok';
-        $retorno['mensagem'] = 'Selecione um autor e escolha Todo o grupo ou Pública.';
+        $retorno['mensagem'] = 'Selecione um autor e uma visibilidade válida.';
 
         $conexao->close();
         header('Content-Type: application/json; charset=utf-8');
@@ -33,9 +33,25 @@
         exit;   
     }
 
+    $idSecao = null;
+
+    if ($visibilidade === 'secao') {
+        $idSecao = filter_input(INPUT_POST, 'id_secao', FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1]
+        ]);
+
+        if (!$idSecao) {
+            $retorno['status'] = 'nok';
+            $retorno['mensagem'] = 'Selecione uma seção válida.';
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($retorno);
+            exit;
+        }
+    }
+
     $stmt = $conexao->prepare(
-        "INSERT INTO aviso (id_grupo, autor, titulo, mensagem, publicado_em, visibilidade) 
-        VALUES (?, ?, ?, ?, ?, ?)"
+        "INSERT INTO aviso (id_grupo, id_secao, autor, titulo, mensagem, publicado_em, visibilidade) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)"
     );
 
     if ($stmt === false) {
@@ -49,7 +65,7 @@
     }
 
     
-    $stmt->bind_param('iissss', $idGrupo, $autor, $titulo, $mensagem, $publicadoEm, $visibilidade);
+    $stmt->bind_param('iiissss', $idGrupo, $idSecao, $autor, $titulo, $mensagem, $publicadoEm, $visibilidade);
     $stmt->execute();
 
     if($stmt->affected_rows > 0){

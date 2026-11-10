@@ -16,8 +16,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     carregarAvisos();
     carregarAutores();
+
+    document.getElementById("avisoVisibilidade")
+        .addEventListener("change", atualizarCampoSecao);
+
+    carregarSecoesAviso();
 });
 
+
+function atualizarCampoSecao() {
+    const visibilidade = document.getElementById("avisoVisibilidade").value;
+    const campo = document.getElementById("campoAvisoSecao");
+    const seletor = document.getElementById("avisoSecao");
+    const porSecao = visibilidade === "secao";
+
+    campo.hidden = !porSecao;
+    seletor.disabled = !porSecao;
+    seletor.required = porSecao;
+}
+
+async function carregarSecoesAviso() {
+    const seletor = document.getElementById("avisoSecao");
+
+    try {
+        const resposta = await fetch(
+            "../assets/php/secoes/listar_secoes.php?situacao=todas"
+        );
+        const retorno = await resposta.json();
+
+        if (!resposta.ok || retorno.status !== "ok") {
+            throw new Error(retorno.mensagem || "Falha ao carregar seções.");
+        }
+
+        for (const secao of retorno.data) {
+            seletor.add(new Option(secao.nome, secao.id_secao));
+        }
+    } catch (erro) {
+        seletor.options[0].textContent = "Erro ao carregar seções";
+        console.error("Erro ao carregar seções dos avisos:", erro);
+    }
+}
 
 async function criaAviso() {
     const titulo = document.getElementById('avisoTitulo').value //dados digitados no formulário
@@ -37,6 +75,17 @@ async function criaAviso() {
     fd.append("data", dataP);
     fd.append("autor", autor);
     fd.append("visibilidade", visibilidade);
+
+    if (visibilidade === "secao") {
+        const idSecao = document.getElementById("avisoSecao").value;
+
+        if (!idSecao) {
+            alert("Selecione uma seção.");
+            return;
+        }
+
+        fd.append("id_secao", idSecao);
+    }
 
     const resposta = await fetch("../assets/php/avisos/cadastrar_avisos.php", {
         method: "POST",
@@ -79,24 +128,33 @@ async function carregarAutores() {
 }
 
 function exibirAviso(titulo, mensagem, data, idAviso) {
-    const dataFormatada = data.split("-").reverse().join("/"); //converte a data
-    const cardsAvisos = document.getElementById('cardsAvisos'); //pega a área que vai receber os cards
+    const dataFormatada = data.split("-").reverse().join("/");
+    const cardsAvisos = document.getElementById("cardsAvisos");
 
-    cardsAvisos.innerHTML += ` 
-        <div class="border border-black rounded-2xl p-4 bg-white shadow-sm space-y-2 mb-4">
-            <h3 class="font-bold text-lg text-green-800">${titulo}</h3>
-            <p class="text-gray-600">${mensagem}</p>
-            <span class="text-xs text-gray-400 block">Publicado em: ${dataFormatada}</span>
-            <button type="button" onclick="excluirAviso(${idAviso})"
-                class="rounded-lg bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700">
-                Excluir
-            </button>
-            <button type="button" onclick="alterarAviso(${idAviso})"
-                class="ml-2 rounded-lg bg-amber-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-600">
-                Alterar
-            </button>
-        </div>
-    `; //acrescenta um novo card de aviso
+    const card = document.createElement("div");
+    card.className = "border border-black rounded-2xl p-4 bg-white shadow-sm space-y-2 mb-4";
+
+    card.innerHTML = `
+        <h3 class="font-bold text-lg text-green-800"></h3>
+        <p class="text-gray-600"></p>
+        <span class="text-xs text-gray-400 block"></span>
+        <button type="button" class="rounded-lg bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700">
+            Excluir
+        </button>
+        <button type="button" class="ml-2 rounded-lg bg-amber-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-600">
+            Alterar
+        </button>
+    `;
+
+    card.querySelector("h3").textContent = titulo;
+    card.querySelector("p").textContent = mensagem;
+    card.querySelector("span").textContent = `Publicado em: ${dataFormatada}`;
+
+    const [botaoExcluir, botaoAlterar] = card.querySelectorAll("button");
+    botaoExcluir.addEventListener("click", () => excluirAviso(idAviso));
+    botaoAlterar.addEventListener("click", () => alterarAviso(idAviso));
+
+    cardsAvisos.appendChild(card);
 }
 
 async function carregarAvisos() {
@@ -155,6 +213,8 @@ async function alterarAviso(idAviso) { //Preenche os campos do formulário com o
         document.getElementById("avisoData").value = registro.publicado_em.split(" ")[0];
         document.getElementById("avisoAutor").value = registro.autor;
         document.getElementById("avisoVisibilidade").value = registro.visibilidade;
+        document.getElementById("avisoSecao").value = registro.id_secao ?? "";
+        atualizarCampoSecao();
         document.getElementById('areaSalvarAviso').innerHTML = //adiciona o botão de Salvar alteração
             `<button type="button" onclick="salvarAlteracao(${idAviso})"
             class="rounded-xl bg-amber-500 px-6 py-2.5 text-white font-medium hover:bg-amber-600">
@@ -181,6 +241,17 @@ async function salvarAlteracao(idAviso) {
     fd.append("data", data);
     fd.append("autor", autor);
     fd.append("visibilidade", visibilidade);
+
+    if (visibilidade === "secao") {
+        const idSecao = document.getElementById("avisoSecao").value;
+
+        if (!idSecao) {
+            alert("Selecione uma seção.");
+            return;
+        }
+
+        fd.append("id_secao", idSecao);
+    }
     
 
     const retorno = await fetch("../assets/php/avisos/alterar_avisos.php?id=" + idAviso,

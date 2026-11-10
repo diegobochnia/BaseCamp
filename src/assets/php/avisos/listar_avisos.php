@@ -43,11 +43,19 @@
             'data'      => $tabela
         ];
     }else{
-        $retorno = [
-            'status'    => 'nok', 
-            'mensagem'  => 'Não há registros', 
-            'data'      => []
-    ];
+        if (isset($_GET['id'])) {
+            $retorno = [
+                'status'   => 'nok',
+                'mensagem' => 'Aviso não encontrado.',
+                'data'     => []
+            ];
+        } else {
+            $retorno = [
+                'status'   => 'ok',
+                'mensagem' => 'Não há avisos cadastrados.',
+                'data'     => []
+            ];
+        }
     }
 
     $stmt->close();
