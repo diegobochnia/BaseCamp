@@ -21,53 +21,6 @@
                 <img src="images/logo-basecamp.png" alt="" width="56" height="56" class="h-10 w-10 lg:h-14 lg:w-14 shrink-0 rounded-full object-contain" />
                 <span class="whitespace-nowrap text-xl font-bold lg:text-2xl tracking-wide"><span class="text-yellow-400">Base</span><span class="text-green-300">Camp</span></span>
             </a>
-<<<<<<< HEAD
-
-            <!-- Menu principal do site. -->
-            <nav aria-label="Navegação principal">
-                <ul class="flex items-center gap-2 text-sm font-medium">
-                    <li>
-                        <a href="../index.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Início
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="integrantes.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Integrantes
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="secoes.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Seções
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="atividades.html" aria-current="page"
-                            class="block rounded-md bg-green-800 px-4 py-2">
-                            Atividades
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="conquistas.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Conquistas
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="avisos.html"
-                            class="block rounded-md px-4 py-2 transition hover:bg-green-800">
-                            Avisos
-                        </a>
-                    </li>
-=======
             <div class="ml-auto flex items-center gap-2 lg:order-3 lg:ml-0">
                 <button type="button" data-menu-toggle aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu" class="flex h-11 w-11 items-center justify-center rounded-md transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 lg:hidden">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -82,7 +35,6 @@
                     <li><a href="atividades.html" aria-current="page" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 bg-green-800 font-bold text-yellow-300 ring-1 ring-inset ring-green-600">Atividades</a></li>
                     <li><a href="conquistas.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Conquistas</a></li>
                     <li><a href="avisos.html" class="flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 hover:bg-green-800">Avisos</a></li>
->>>>>>> main
                 </ul>
             </nav>
         </div>
@@ -118,46 +70,55 @@
                     </label>
 
                     <label class="block">
-                        <span class="mb-1 block text-sm font-medium text-slate-700">Data</span>
-                        <input type="text" id="Data"
+                        <span class="mb-1 block text-sm font-medium text-slate-700">Início</span>
+                        <input type="datetime-local" id="inicio"
                             class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white">
                     </label>
                     <label class="block">
-                        <span class="mb-1 block text-sm font-medium text-slate-700">Horário</span>
-                        <input type="text" id="Horario"
+                        <span class="mb-1 block text-sm font-medium text-slate-700">Término</span>
+                        <input type="datetime-local" id="termino"
                             class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white">
                     </label>
-
                     <label class="block">
                         <span class="mb-1 block text-sm font-medium text-slate-700">Seção</span>
-                        <input type="text" id="secçao"
+                        <select id="id_secao"
+                            class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white"></select>
+                    </label>
+                    <label class="block">
+                        <span class="mb-1 block text-sm font-medium text-slate-700">Local</span>
+                        <input type="text" id="local"
                             class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white">
                     </label>
-
+                    <label class="block">
+                        <span class="mb-1 block text-sm font-medium text-slate-700">Situação</span>
+                        <select id="situacao"
+                            class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white">
+                            <option value="programada">Programada</option>
+                            <option value="concluida">Concluída</option>
+                            <option value="cancelada">Cancelada</option>
+                        </select>
+                    </label>
                     <label class="block">
                         <span class="mb-1 block text-sm font-medium text-slate-700">Descrição</span>
-                        <textarea id="descrição" rows="3"
+                        <textarea id="descricao" rows="3"
                             class="w-full resize-y rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-green-500 focus:bg-white"></textarea>
                     </label>
 
-                    <!-- O botão adiciona a atividade; o espaço ao lado pode receber controles de edição. -->
+                    <input type="hidden" id="id_atividade">
+                    <p id="resultado" role="status" aria-live="polite" class="text-sm text-slate-600"></p>
+                    <!-- Ações para salvar ou cancelar o cadastro e a edição. -->
                     <div class="flex items-center gap-3">
                         <button id="btn_add" type="button"
                             class="rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-800">
                             Adicionar
                         </button>
-                        <div id="alterar" class="flex"></div>
+                        <button id="cancelar" type="button" class="hidden rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100">Cancelar</button>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-<<<<<<< HEAD
-    <!-- Carrega o código JavaScript que controla as atividades desta página. -->
-    <script src="../assests/js/atividades.js"></script>
-=======
     <script src="../assets/js/atividades.js"></script>
->>>>>>> main
 </body>
 </html>

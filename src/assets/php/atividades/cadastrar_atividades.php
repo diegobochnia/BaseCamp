@@ -12,7 +12,7 @@ $stmt = $conexao->prepare(
 'INSERT INTO atividade(id_secao, titulo, descricao, inicio, termino, local, situacao)
 VALUES (?, ?, ?, ?, ?, ?, ?)'
 );
-$stmt->bind_param('ssssii', $id_secao, $titulo, $descricao, $inicio, $termino, $local, $situacao);
+$stmt->bind_param('issssss', $id_secao, $titulo, $descricao, $inicio, $termino, $local, $situacao);
 $stmt->execute();
 if ($stmt->affected_rows > 0) {
 $retorno['status'] = 'ok';
