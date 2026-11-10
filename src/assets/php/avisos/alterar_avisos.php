@@ -14,22 +14,32 @@
     $autor = (int) ($_POST['autor'] ?? 0);
     $visibilidade = $_POST['visibilidade'] ?? '';
 
+    $idSecao = null;
+
+    if ($visibilidade === 'secao') {
+        $idSecao = filter_input(INPUT_POST, 'id_secao', FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1]
+        ]);
+    }
+
     if ($idAviso < 1 || $titulo === '' || $mensagem === '' || $data === '' || $autor < 1) {
         $retorno['mensagem'] = 'Informe o ID e preencha os campos do aviso.';
-    } elseif (!in_array($visibilidade, ['grupo', 'publica'], true)) {
-        $retorno['mensagem'] = 'Escolha Todo o grupo ou Pública.';
+    } elseif (!in_array($visibilidade, ['grupo', 'publica', 'secao'], true)) {
+        $retorno['mensagem'] = 'Escolha uma visibilidade válida.';
+    } elseif ($visibilidade === 'secao' && !$idSecao) {
+        $retorno['mensagem'] = 'Selecione uma seção válida.';
     } else {
         $stmt = $conexao->prepare(
             "UPDATE aviso
             SET titulo = ?, mensagem = ?,
                 publicado_em = TIMESTAMP(?, TIME(publicado_em)),
-                autor = ?, visibilidade = ?, id_secao = NULL
+                autor = ?, visibilidade = ?, id_secao = ?
             WHERE id_aviso = ?"
         );
 
         if ($stmt !== false) {
             $stmt->bind_param(
-                'sssisi', $titulo, $mensagem, $data, $autor, $visibilidade, $idAviso
+                'sssisii', $titulo, $mensagem, $data, $autor, $visibilidade, $idSecao, $idAviso
             );
 
             if ($stmt->execute() && $stmt->affected_rows > 0) {
