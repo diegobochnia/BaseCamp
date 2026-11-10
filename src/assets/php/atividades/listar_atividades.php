@@ -1,5 +1,5 @@
 <?php
-include_once('conexao.php');
+include_once('../conexao.php');
 $retorno = ['status' => '', 'mensagem' => '', 'data' => []];
 $situacao = $_GET['situacao'] ?? 'todas';
 $situacoes = ['programada', 'concluida', 'cancelada', 'todas'];

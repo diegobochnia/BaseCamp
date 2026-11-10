@@ -1,5 +1,5 @@
 <?php
-include_once('conexao.php');
+include_once('../conexao.php');
 $retorno = ['status' => '', 'mensagem' => '', 'data' => []];
 $id_secao = $_POST['id_secao'];
 $titulo = $_POST['titulo'];
