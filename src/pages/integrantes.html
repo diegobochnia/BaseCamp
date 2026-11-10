@@ -43,43 +43,48 @@
             <div class="w-full lg:w-80 shrink-0 bg-white rounded-lg shadow-sm border border-zinc-200 p-5">
                 <h2 class="text-sm font-semibold text-green-900 uppercase tracking-wide mb-4">Novo integrante</h2>
 
-                <form class="flex flex-col gap-3">
+                <form id="formIntegrante" class="flex flex-col gap-3">
+                    <input type="hidden" id="id_integrante" name="id_integrante">
+
                     <label class="flex flex-col gap-1 text-sm text-zinc-600">
                         Nome
-                        <input type="text" placeholder="Nome completo" id="nome"
+                        <input type="text" placeholder="Nome completo" id="nome" name="nome"
+                            class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
+                    </label>
+
+                    <label class="flex flex-col gap-1 text-sm text-zinc-600">
+                        E-mail
+                        <input type="email" placeholder="email@exemplo.com" id="email" name="email"
                             class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
                     </label>
 
                     <label class="flex flex-col gap-1 text-sm text-zinc-600">
                         Data de nascimento
-                        <input type="date" id="nascimento"
+                        <input type="date" id="nascimento" name="data_nascimento"
                             class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
                     </label>
 
                     <label class="flex flex-col gap-1 text-sm text-zinc-600">
                         Telefone
-                        <input type="text" placeholder="(00) 00000-0000" id="telefone"
+                        <input type="text" placeholder="(00) 00000-0000" id="telefone" name="telefone"
                             class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition" />
                     </label>
 
                     <label class="flex flex-col gap-1 text-sm text-zinc-600">
                         Seção
-                        <select name="secoes" id="secoes"
+                        <select name="id_secao" id="secoes"
                             class="border border-zinc-300 rounded-md p-2 outline-none focus:border-green-900 transition">
                             <option value="">Selecione uma seção</option>
-                            <option value="lobinho">Lobinho</option>
-                            <option value="escoteiro">Escoteiro</option>
-                            <option value="senior">Sênior</option>
-                            <option value="pioneiro">Pioneiro</option>
-                            <option value="chefe">Chefe</option>
-                            <option value="administrativo">Administrativo</option>
                         </select>
                     </label>
 
                     <input type="button" value="Adicionar"
                         class="mt-2 bg-green-900 text-white py-2 px-4 rounded-md hover:bg-green-800 transition cursor-pointer font-medium"
                         id="add-integrante" />
+                    <button id="cancelarEdicao" type="button" class="hidden rounded border px-4 py-2">Cancelar edição</button>
                 </form>
+
+                <div id="Resultado" class="mt-4 text-sm" role="status" aria-live="polite"></div>
             </div>
 
             <div class="flex-1 w-full bg-white rounded-lg shadow-sm border border-zinc-200 p-5 overflow-x-auto">
